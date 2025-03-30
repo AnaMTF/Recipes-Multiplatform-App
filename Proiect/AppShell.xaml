@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="Proiect.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Proiect"
-    Shell.FlyoutBehavior="Flyout"
-    Title="Proiect">
+	x:Class="Proiect.AppShell"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Proiect"
+	xmlns:views="clr-namespace:Proiect.Views"
+	Shell.FlyoutBehavior="Flyout"
+	Title="Proiect">
 
+	<ShellContent
+		Title="Home"
+		ContentTemplate="{DataTemplate views:MainPage}"
+		Route="MainPage" />
+	<ShellContent
+		Title="Favourite Recipes"
+		ContentTemplate="{DataTemplate views:Favourites}"
+		Route="Favourites" />
+	<ShellContent
+		Title="Add or Edit a Recipe"
+		ContentTemplate="{DataTemplate views:AddRecipe}"
+		Route="AddRecipe" />
+	<ShellContent
+		Title="Settings"
+		ContentTemplate="{DataTemplate views:Settings}"
+		Route="Settings" />
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+		Title="About this App"
+		ContentTemplate="{DataTemplate views:AboutApp}"
+		Route="AboutApp" />
+    <ShellContent
+		Title="Recipe Details"
+		ContentTemplate="{DataTemplate views:Details}"
+		Route="Details" />
 </Shell>

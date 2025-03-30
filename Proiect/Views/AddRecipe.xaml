@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Proiect.Views.AddRecipe"
+             Title="AddRecipe">
+    <ScrollView>
+        <StackLayout Spacing="10" Padding="20" Margin="30">
+            <Label Text="Add a new recipe" FontSize="Large" HorizontalOptions="Center" />
+            
+            <Border Stroke="Violet"
+                    StrokeThickness="2"
+                Padding="5"
+                    StrokeShape="RoundRectangle 40,0,0,40">
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                    <Label Text="Recipe Name:"/>
+                </StackLayout>
+            </Border>
+            <Entry x:Name="RecipeName" Text="{Binding Name}"/>
+
+            <Border Stroke="Violet"
+                    StrokeThickness="2"
+                Padding="5"
+                    StrokeShape="RoundRectangle 40,0,0,40">
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <BoxView Color="AliceBlue" WidthRequest="40"/>
+                    <Label Text="Description:"/>
+                </StackLayout>
+            </Border>
+            <Editor x:Name="Description" Text="{Binding Description}" HeightRequest="100"/>
+
+            <Border Stroke="Violet"
+                    StrokeThickness="2"
+                Padding="5"
+                    StrokeShape="RoundRectangle 40,0,0,40">
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                    <Label Text="Ingredients:" />
+                </StackLayout>
+            </Border>
+            <Editor x:Name="IngredientsEditor" Text="{Binding IngredientsText}" HeightRequest="100"/>
+
+            <Border Stroke="Violet"
+                    StrokeThickness="2"
+                Padding="5"
+                    StrokeShape="RoundRectangle 40,0,0,40">
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                    <Label Text="Steps:" />
+                </StackLayout>
+            </Border>
+            <Editor x:Name="MethodEditor" Text="{Binding MethodText}" HeightRequest="100"/>
+            
+            <Border Stroke="Violet"
+                    StrokeThickness="2"
+                Padding="5"
+                    StrokeShape="RoundRectangle 40,0,0,40">
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                    <Label Text="Prepping Time:" />
+                </StackLayout>
+            </Border>
+            
+            <Entry x:Name="PreppingTime" Text="{Binding PreppingTime}" />
+            
+            <Border Stroke="Violet"
+                    StrokeThickness="2"
+                Padding="5"
+                StrokeShape="RoundRectangle 40,0,0,40">
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                    <Label Text="Cooking Time:" />
+                </StackLayout>
+            </Border>
+            
+            <Entry x:Name="CookingTime" Text="{Binding CookingTime}" />
+
+            <Border Stroke="Violet"
+                    StrokeThickness="2"
+                Padding="5"
+                StrokeShape="RoundRectangle 40,0,0,40">
+                <StackLayout Orientation="Horizontal" Spacing="15">
+                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                    <Label Text="Total Time:" />
+                </StackLayout>
+            </Border>
+            <Entry x:Name="TotalTime" Text="{Binding TotalTime}" />
+            
+            <Button Text="Salvează"  />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
