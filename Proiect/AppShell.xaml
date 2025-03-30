@@ -17,9 +17,13 @@
 		ContentTemplate="{DataTemplate views:Favourites}"
 		Route="Favourites" />
 	<ShellContent
-		Title="Add or Edit a Recipe"
+		Title="Add a Recipe"
 		ContentTemplate="{DataTemplate views:AddRecipe}"
 		Route="AddRecipe" />
+    <ShellContent
+		Title="Edit a Recipe"
+		ContentTemplate="{DataTemplate views:EditRecipe}"
+		Route="EditRecipe" />
 	<ShellContent
 		Title="Settings"
 		ContentTemplate="{DataTemplate views:Settings}"

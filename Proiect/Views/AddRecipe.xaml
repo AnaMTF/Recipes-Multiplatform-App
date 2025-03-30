@@ -3,11 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.AddRecipe"
              Title="AddRecipe">
-    <ScrollView>
-        <StackLayout Spacing="10" Padding="20" Margin="30">
-            <Label Text="Add a new recipe" FontSize="Large" HorizontalOptions="Center" />
-            
-            <Border Stroke="Violet"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ProgressBar x:Name="FormProgressBar"
+                 Grid.Row="0"
+                 HeightRequest="20"
+                 Margin="10" />
+        
+        <ScrollView Grid.Row="1">
+            <StackLayout Spacing="10" Padding="20" Margin="30">
+                <Label Text="Add a new recipe" FontSize="Large" HorizontalOptions="Center" />
+                <!-- Recipe Name -->
+                <Border Stroke="Violet"
                     StrokeThickness="2"
                 Padding="5"
                     StrokeShape="RoundRectangle 40,0,0,40">
@@ -16,9 +27,10 @@
                     <Label Text="Recipe Name:"/>
                 </StackLayout>
             </Border>
-            <Entry x:Name="RecipeName" Text="{Binding Name}"/>
-
-            <Border Stroke="Violet"
+                <Entry x:Name="RecipeName" Placeholder="Enter recipe name" 
+               TextChanged="OnEntryTextChanged"/>
+                <!-- Description -->
+                <Border Stroke="Violet"
                     StrokeThickness="2"
                 Padding="5"
                     StrokeShape="RoundRectangle 40,0,0,40">
@@ -27,9 +39,11 @@
                     <Label Text="Description:"/>
                 </StackLayout>
             </Border>
-            <Editor x:Name="Description" Text="{Binding Description}" HeightRequest="100"/>
-
-            <Border Stroke="Violet"
+            <Editor x:Name="Description" HeightRequest="100"
+                    Placeholder="Enter description"
+                TextChanged="OnEntryTextChanged"/>
+                <!-- Ingredients -->
+                <Border Stroke="Violet"
                     StrokeThickness="2"
                 Padding="5"
                     StrokeShape="RoundRectangle 40,0,0,40">
@@ -38,9 +52,22 @@
                     <Label Text="Ingredients:" />
                 </StackLayout>
             </Border>
-            <Editor x:Name="IngredientsEditor" Text="{Binding IngredientsText}" HeightRequest="100"/>
-
-            <Border Stroke="Violet"
+                <Picker x:Name="IngredientPicker" 
+                Title="Select an ingredient" 
+                SelectedIndexChanged="IngredientPicker_SelectedIndexChanged"/>
+                <Button Text="Add Ingredient" Clicked="AddIngredient_Clicked"/>
+                <CollectionView x:Name="IngredientsList" 
+                        ItemsSource="{Binding SelectedIngredients}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding .}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <!-- Steps -->
+                <Border Stroke="Violet"
                     StrokeThickness="2"
                 Padding="5"
                     StrokeShape="RoundRectangle 40,0,0,40">
@@ -49,33 +76,38 @@
                     <Label Text="Steps:" />
                 </StackLayout>
             </Border>
-            <Editor x:Name="MethodEditor" Text="{Binding MethodText}" HeightRequest="100"/>
-            
-            <Border Stroke="Violet"
+                <Editor x:Name="MethodEditor" Placeholder="Enter steps separated by ';'"
+                TextChanged="OnEntryTextChanged" HeightRequest="100"/>
+                <!-- Prepping Time -->
+                <Border Stroke="Violet"
                     StrokeThickness="2"
                 Padding="5"
                     StrokeShape="RoundRectangle 40,0,0,40">
                 <StackLayout Orientation="Horizontal" Spacing="15">
                     <BoxView Color="Cornsilk" WidthRequest="40"/>
-                    <Label Text="Prepping Time:" />
+                    <Label Text="Prepping Time (minutes):" />
                 </StackLayout>
             </Border>
-            
-            <Entry x:Name="PreppingTime" Text="{Binding PreppingTime}" />
-            
-            <Border Stroke="Violet"
+
+                <Entry x:Name="PreppingTime" Placeholder="e.g., 30" 
+               Keyboard="Numeric"
+               TextChanged="OnTimeTextChanged" />
+                <!-- Cooking Time -->
+                <Border Stroke="Violet"
                     StrokeThickness="2"
                 Padding="5"
                 StrokeShape="RoundRectangle 40,0,0,40">
                 <StackLayout Orientation="Horizontal" Spacing="15">
                     <BoxView Color="Cornsilk" WidthRequest="40"/>
-                    <Label Text="Cooking Time:" />
+                        <Label Text="Cooking Time (minutes):" />
                 </StackLayout>
             </Border>
-            
-            <Entry x:Name="CookingTime" Text="{Binding CookingTime}" />
 
-            <Border Stroke="Violet"
+                <Entry x:Name="CookingTime" Placeholder="e.g., 60" 
+               Keyboard="Numeric"
+               TextChanged="OnTimeTextChanged" />
+                <!-- Total Time -->
+                <Border Stroke="Violet"
                     StrokeThickness="2"
                 Padding="5"
                 StrokeShape="RoundRectangle 40,0,0,40">
@@ -84,9 +116,12 @@
                     <Label Text="Total Time:" />
                 </StackLayout>
             </Border>
-            <Entry x:Name="TotalTime" Text="{Binding TotalTime}" />
-            
-            <Button Text="Salvează"  />
+                <Label x:Name="TotalTimeLabel" 
+               FontAttributes="Bold" 
+               Text="0 minutes" />
+
+                <Button Text="Save" Clicked="OnSaveClicked"/>
         </StackLayout>
     </ScrollView>
+    </Grid>
 </ContentPage>
