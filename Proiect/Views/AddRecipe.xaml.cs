@@ -1,17 +1,16 @@
-﻿using System.Collections.ObjectModel;
+﻿using Proiect.Models;
+using Proiect.Services;
+using System.Collections.ObjectModel;
 
 namespace Proiect.Views;
 
 public partial class AddRecipe : ContentPage
 {
+    string urlIngr = "https://raw.githubusercontent.com/AnaMTF/cookbook-json/refs/heads/main/ingredients.xml";
+    List<Ingredient> listaIngrediente = new List<Ingredient>();
+
     // Colectie pentru ingredientele selectate
     public ObservableCollection<string> SelectedIngredients { get; set; } = new ObservableCollection<string>();
-
-    // Lista de ingrediente predefinite (momentan așa, dar se poate citi dintr-o sursă externă gen json sau xml dacă vreți așa)
-    public ObservableCollection<string> AvailableIngredients { get; set; } = new ObservableCollection<string>
-        {
-            "Tomato", "Cheese", "Onion", "Garlic", "Basil", "Olive Oil", "Salt", "Pepper", "Chicken", "Beef"
-        };
 
     // Numărul de câmpuri obligatorii: RecipeName, Description, Ingredients, Steps, PreppingTime, CookingTime
     int totalFields = 6;
@@ -19,9 +18,10 @@ public partial class AddRecipe : ContentPage
     public AddRecipe()
     {
         InitializeComponent();
+        listaIngrediente = IngredientsService.GetIngredient(urlIngr);
         BindingContext = this;
         // Populăm Picker‑ul cu ingrediente
-        IngredientPicker.ItemsSource = AvailableIngredients;
+        IngredientPicker.ItemsSource = listaIngrediente;
         // Legăm lista de ingrediente selectate la CollectionView
         IngredientsList.ItemsSource = SelectedIngredients;
         // Inițializăm progress bar-ul și total time
@@ -89,7 +89,7 @@ public partial class AddRecipe : ContentPage
     {
         if (IngredientPicker.SelectedIndex != -1)
         {
-            string ingredient = AvailableIngredients[IngredientPicker.SelectedIndex];
+            string ingredient = listaIngrediente[IngredientPicker.SelectedIndex].IngredientName;
             if (!SelectedIngredients.Contains(ingredient))
             {
                 SelectedIngredients.Add(ingredient);

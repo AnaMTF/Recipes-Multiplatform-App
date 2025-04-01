@@ -23,8 +23,9 @@
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+            <Picker x:Name="testIngr" Title="Select the Ingredient"/>
 
-            
+
         </VerticalStackLayout>
     </ScrollView>
 
