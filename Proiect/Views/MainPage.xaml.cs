@@ -1,19 +1,39 @@
 ﻿using Proiect.Models;
 using Proiect.Services;
+using System.Collections.ObjectModel;
 
 namespace Proiect.Views
 {
     public partial class MainPage : ContentPage
     {
-        string urlIngr = "https://raw.githubusercontent.com/AnaMTF/cookbook-json/refs/heads/main/ingredients.xml";
-        int count = 0;
-        List<Ingredient> listaIngrediente = new List<Ingredient>();
-
+        public ObservableCollection<Recipe> TopRecipes { get; set; } = new ObservableCollection<Recipe>();
+        public ObservableCollection<Recipe> AllRecipes { get; set; } = new ObservableCollection<Recipe>();
         public MainPage()
         {
             InitializeComponent();
-            listaIngrediente = IngredientsService.GetIngredient(urlIngr);
-            testIngr.ItemsSource = listaIngrediente;
+            BindingContext = this;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            var service = new RecipeService();
+            var recipes = await service.GetRecipesAsync();
+
+            TopRecipes.Clear();
+            AllRecipes.Clear();
+
+            // CarouselView
+            foreach (var recipe in recipes.Take(5))
+            {
+                TopRecipes.Add(recipe);
+            }
+
+            // Picker
+            foreach (var recipe in recipes)
+            {
+                AllRecipes.Add(recipe);
+            }
         }
     }
 

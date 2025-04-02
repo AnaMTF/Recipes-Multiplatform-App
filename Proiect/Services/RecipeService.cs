@@ -16,9 +16,17 @@ namespace Proiect.Services
         {
             using (var client = new HttpClient())
             {
-                var json = await client.GetStringAsync(RecipesUrl);
-                var recipes = JsonSerializer.Deserialize<List<Recipe>>(json);
-                return recipes;
+                try
+                {
+                    var json = await client.GetStringAsync(RecipesUrl);
+                    var recipes = JsonSerializer.Deserialize<List<Recipe>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    return recipes;
+                }
+                catch (Exception ex)
+                {
+                    // Într-o aplicație reală aici se poate loga eroarea sau se poate afișa un mesaj
+                    throw new Exception("Eroare la descărcarea rețetelor", ex);
+                }
             }
         }
     }
