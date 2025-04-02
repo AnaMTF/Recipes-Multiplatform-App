@@ -42,6 +42,17 @@
             <Editor x:Name="Description" HeightRequest="100"
                     Placeholder="Enter description"
                 TextChanged="OnEntryTextChanged"/>
+                <!-- Recipe Photo Section -->
+                <Border Stroke="Violet" StrokeThickness="2" Padding="5"
+                        StrokeShape="RoundRectangle 40,0,0,40">
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <BoxView Color="LightGray" WidthRequest="40"/>
+                        <Label Text="Recipe Photo:"/>
+                    </StackLayout>
+                </Border>
+                <!-- Selected Image -->
+                <Image x:Name="RecipeImage" HeightRequest="200" Aspect="AspectFill" />
+                <Button Text="Add Photo" Clicked="OnPickPhotoClicked" />
                 <!-- Ingredients -->
                 <Border Stroke="Violet"
                     StrokeThickness="2"
@@ -60,8 +71,9 @@
                         ItemsSource="{Binding SelectedIngredients}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding .}" />
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="{Binding Category, StringFormat='Category: {0}'}" />
+                                <Label Text="{Binding IngredientName, StringFormat='Ingredient: {0}'}" />
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

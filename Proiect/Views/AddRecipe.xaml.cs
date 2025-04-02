@@ -10,7 +10,8 @@ public partial class AddRecipe : ContentPage
     List<Ingredient> listaIngrediente = new List<Ingredient>();
 
     // Colectie pentru ingredientele selectate
-    public ObservableCollection<string> SelectedIngredients { get; set; } = new ObservableCollection<string>();
+    public ObservableCollection<Ingredient> SelectedIngredients { get; set; } = new ObservableCollection<Ingredient>();
+
 
     // Numărul de câmpuri obligatorii: RecipeName, Description, Ingredients, Steps, PreppingTime, CookingTime
     int totalFields = 6;
@@ -83,18 +84,42 @@ public partial class AddRecipe : ContentPage
     {
         // TO DO (ceva) 
     }
-
+    
     // Adaugă ingredientul selectat în lista de ingrediente
     void AddIngredient_Clicked(object sender, EventArgs e)
     {
         if (IngredientPicker.SelectedIndex != -1)
         {
-            string ingredient = listaIngrediente[IngredientPicker.SelectedIndex].IngredientName;
-            if (!SelectedIngredients.Contains(ingredient))
+            var selectedIngredient = listaIngrediente[IngredientPicker.SelectedIndex];
+            // Verificăm dacă nu a fost deja adăugat (folosind numele ca identificator)
+            if (!SelectedIngredients.Any(i => i.IngredientName == selectedIngredient.IngredientName))
             {
-                SelectedIngredients.Add(ingredient);
+                SelectedIngredients.Add(selectedIngredient);
                 UpdateProgress();
             }
+
+        }
+    }
+
+    // Eveniment pentru alegerea unei poze pentru rețetă
+    private async void OnPickPhotoClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions
+            {
+                Title = "Select a photo for the recipe"
+            });
+
+            if (result != null)
+            {
+                var stream = await result.OpenReadAsync();
+                RecipeImage.Source = ImageSource.FromStream(() => stream);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Unable to pick photo: {ex.Message}", "OK");
         }
     }
 
@@ -109,6 +134,6 @@ public partial class AddRecipe : ContentPage
         string cookingTime = CookingTime.Text;
         // Ingredientele sunt în SelectedIngredients
 
-        await DisplayAlert("Salvat", "Recipe saved successfully!", "OK");
+        await DisplayAlert("Saved", "Recipe saved successfully!", "OK");
     }
 }

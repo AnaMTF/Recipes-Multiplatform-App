@@ -7,6 +7,8 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
+            <SearchBar Placeholder="Search a Recipe" PlaceholderColor="LightPink"/>
+
             <Image
                 Source="dotnet_bot.png"
                 HeightRequest="185"

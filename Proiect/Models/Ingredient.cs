@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proiect.Models
 {
-    internal class Ingredient
+    public class Ingredient
     {
         public int Id { get; set; }
         public string Category { get; set; }
