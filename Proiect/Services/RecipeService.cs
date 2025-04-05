@@ -10,7 +10,7 @@ namespace Proiect.Services
 {
     public class RecipeService
     {
-        private const string RecipesUrl = "https://raw.githubusercontent.com/AnaMTF/cookbook-json/refs/heads/main/updated_recipes_with_times.json";
+        private const string RecipesUrl = "https://raw.githubusercontent.com/AnaMTF/cookbook-json/refs/heads/main/final_recipes_diverse_themes.json";
 
         public async Task<List<Recipe>> GetRecipesAsync()
         {

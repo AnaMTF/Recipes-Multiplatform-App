@@ -33,6 +33,12 @@ namespace Proiect.Models
         [JsonPropertyName("Total Time")]
         public string TotalTime { get; set; }
 
+        [JsonPropertyName("Category")]
+        public string Category { get; set; }
+
+        [JsonPropertyName("Themes")]
+        public List<string> Themes { get; set; }
+
         // Proprietate calculată pentru a obține un URL pentru imagine.
         // În lipsa unei proprietăți "ImageUrl" în JSON, folosim un placeholder.
         public string ImageUrl
