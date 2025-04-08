@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Controls;
+using Proiect.Data;
 using Proiect.Models;
 using Proiect.Services;
 using System;
@@ -266,12 +267,53 @@ namespace Proiect.Views
             // Se preiau și celelalte câmpuri din interfață (exemplu)
             string recipeName = RecipeName.Text;
             string description = Description.Text;
-            string steps = MethodEditor.Text;
+            List<string> stepsList = MethodEditor.Text.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                                                      .Select(s => s.Trim())
+                                                      .ToList();
             string preppingTime = PreppingTime.Text;
             string cookingTime = CookingTime.Text;
-            // Ingredientele sunt în SelectedIngredients, iar temele în SelectedThemes
 
-            await DisplayAlert("Saved", $"Recipe saved!\nCategory: {category}\nThemes: {string.Join(", ", SelectedThemes)}", "OK");
+            List<string> ingredientsList = SelectedIngredients.Select(i => i.IngredientName).ToList();
+            List<string> themesList = SelectedThemes.ToList();
+
+            string totalTime = "no time";
+            if (int.TryParse(preppingTime, out int prep) && int.TryParse(cookingTime, out int cook))
+            {
+                totalTime = (prep + cook).ToString() + " Minutes";
+            }
+
+            //obiectul recipe
+            Recipe newRecipe = new Recipe
+            {
+                Name = recipeName,
+                Description = description,
+                Author = "Ana M.",
+                Ingredients = ingredientsList,
+                Method = stepsList,
+                PreppingTime = preppingTime,
+                CookingTime = cookingTime,
+                TotalTime = totalTime,
+                Category = category,
+                Themes = themesList
+                // Nu stocăm direct poza în model, deoarece proprietatea ImageUrl e calculată;
+                // dacă vreti putem pastra calea imaginii (trebuie o proprietate suplimentară (gen photoPath))
+
+            };
+
+            RecipeDao recipeDao = new RecipeDao();
+            int result =  recipeDao.InsertRecipe(newRecipe);
+
+            if(result > 0)
+            {
+                await DisplayAlert("Saved",
+                    $"Recipe '{recipeName}' saved successfully!\nCategory: {category}\nThemes: {string.Join(", ", themesList)}",
+                    "OK");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Failed to save the recipe.", "OK");
+            }
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Controls;
+using Proiect.Data;
 using Proiect.Models;
 using Proiect.Services;
 using System.Collections.ObjectModel;
@@ -22,30 +23,33 @@ namespace Proiect.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            var recipeService = new RecipeService();
-            var recipes = await recipeService.GetRecipesAsync();
+            // Pentru a popula Picker-ul cu rețete din baza de date:
+            
+            RecipeDao recipeDao = new RecipeDao();
+            var dbRecipes = recipeDao.GetAllRecipes();  // preia lista de rețete din DB
+
 
             // Populează colecțiile pentru Carousel, Picker, Recomandate
-            TopRecipes.Clear();
             AllRecipes.Clear();
-            RecommendedRecipes.Clear();
-
-            foreach (var recipe in recipes.Take(5))
-            {
-                TopRecipes.Add(recipe);
-            }
-            foreach (var recipe in recipes)
+            foreach (var recipe in dbRecipes)
             {
                 AllRecipes.Add(recipe);
             }
-            // recomandate – rețetele care au tema "christmas"
-            foreach (var recipe in recipes.Where(r => r.Themes != null && r.Themes.Contains("christmas")).Take(5))
+
+            // Exemplu: pentru Carousel și Recomandate
+            TopRecipes.Clear();
+            foreach (var recipe in dbRecipes.Take(5))
+            {
+                TopRecipes.Add(recipe);
+            }
+            RecommendedRecipes.Clear();
+            foreach (var recipe in dbRecipes.Where(r => r.Themes != null && r.Themes.Contains("christmas")).Take(5))
             {
                 RecommendedRecipes.Add(recipe);
             }
 
             // Extrage categoriile unice din rețete
-            var uniqueCategories = recipes
+            var uniqueCategories = dbRecipes
                 .Where(r => !string.IsNullOrWhiteSpace(r.Category))
                 .Select(r => r.Category)
                 .Distinct();
@@ -57,8 +61,7 @@ namespace Proiect.Views
                 Categories.Add(new Category
                 {
                     Name = cat,
-                    // poza de exemplu pentru categorie trebuie scimbata
-                    ImageUrl = $"https://blogs.biomedcentral.com/on-medicine/wp-content/uploads/sites/6/2019/09/iStock-1131794876.t5d482e40.m800.xtDADj9SvTVFjzuNeGuNUUGY4tm5d6UGU5tkKM0s3iPk-620x342.jpg?text={Uri.EscapeDataString(cat)}"
+                    ImageUrl = $"https://via.placeholder.com/60.png?text={Uri.EscapeDataString(cat)}"
                 });
             }
 
