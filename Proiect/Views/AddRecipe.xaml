@@ -24,7 +24,7 @@
                     StrokeShape="RoundRectangle 40,0,0,40">
                 <StackLayout Orientation="Horizontal" Spacing="15">
                     <BoxView Color="Cornsilk" WidthRequest="40"/>
-                    <Label Text="Recipe Name:"/>
+                        <Label Text="Recipe Name:" FontSize="Medium"/>
                 </StackLayout>
             </Border>
                 <Entry x:Name="RecipeName" Placeholder="Enter recipe name" 
@@ -36,7 +36,7 @@
                     StrokeShape="RoundRectangle 40,0,0,40">
                 <StackLayout Orientation="Horizontal" Spacing="15">
                     <BoxView Color="AliceBlue" WidthRequest="40"/>
-                    <Label Text="Description:"/>
+                        <Label Text="Description:" FontSize="Medium"/>
                 </StackLayout>
             </Border>
             <Editor x:Name="Description" HeightRequest="100"
@@ -47,12 +47,65 @@
                         StrokeShape="RoundRectangle 40,0,0,40">
                     <StackLayout Orientation="Horizontal" Spacing="15">
                         <BoxView Color="LightGray" WidthRequest="40"/>
-                        <Label Text="Recipe Photo:"/>
+                        <Label Text="Recipe Photo:" FontSize="Medium"/>
                     </StackLayout>
                 </Border>
                 <!-- Selected Image -->
                 <Image x:Name="RecipeImage" HeightRequest="200" Aspect="AspectFill" />
                 <Button Text="Add Photo" Clicked="OnPickPhotoClicked" />
+                <!-- Secțiunea pentru Category -->
+                <Border Stroke="Violet"
+        StrokeThickness="2"
+    Padding="5"
+        StrokeShape="RoundRectangle 40,0,0,40">
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <BoxView Color="Cornsilk" WidthRequest="40"/>
+                        <Label Text="Category:" FontSize="Medium" />
+                    </StackLayout>
+                </Border>
+                
+                <!-- Picker pentru categorii -->
+                <Picker x:Name="CategoryPicker"
+              Title="Selectează o categorie"
+              ItemsSource="{Binding AvailableCategories}"
+              SelectedIndexChanged="CategoryPicker_SelectedIndexChanged"/>
+                <!-- Entry pentru categorie personalizată, vizibil doar dacă s-a ales "Other" -->
+                <Entry x:Name="CustomCategoryEntry" 
+             Placeholder="Introduceți categoria dorită"
+             IsVisible="False"/>
+
+                <!-- Secțiunea pentru Themes -->
+                <Border Stroke="Violet"
+    StrokeThickness="2"
+Padding="5"
+    StrokeShape="RoundRectangle 40,0,0,40">
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <BoxView Color="Cornsilk" WidthRequest="40"/>
+                        <Label Text="Themes:" FontSize="Medium" />
+                    </StackLayout>
+                </Border>
+                
+                <!-- Picker pentru teme -->
+                <Picker x:Name="ThemePicker"
+              Title="Selectează o temă"
+              ItemsSource="{Binding AvailableThemes}"
+              SelectedIndexChanged="ThemePicker_SelectedIndexChanged"/>
+                <!-- Entry pentru temă personalizată -->
+                <Entry x:Name="CustomThemeEntry" 
+             Placeholder="Introduceți tema dorită"
+             IsVisible="False"/>
+                <!-- Buton pentru adăugarea temei selectate -->
+                <Button Text="Adaugă Tema" Clicked="AddTheme_Clicked"/>
+                <!-- Listă pentru afișarea temelor selectate -->
+                <CollectionView x:Name="ThemesList" ItemsSource="{Binding SelectedThemes}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Stroke="Gray" StrokeThickness="1" Margin="5" Padding="5">
+                                <Label Text="{Binding .}" FontSize="Small"/>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
                 <!-- Ingredients -->
                 <Border Stroke="Violet"
                     StrokeThickness="2"
@@ -60,7 +113,7 @@
                     StrokeShape="RoundRectangle 40,0,0,40">
                 <StackLayout Orientation="Horizontal" Spacing="15">
                     <BoxView Color="Cornsilk" WidthRequest="40"/>
-                    <Label Text="Ingredients:" />
+                        <Label Text="Ingredients:"  FontSize="Medium"/>
                 </StackLayout>
             </Border>
                 <Picker x:Name="IngredientPicker" 
@@ -85,7 +138,7 @@
                     StrokeShape="RoundRectangle 40,0,0,40">
                 <StackLayout Orientation="Horizontal" Spacing="15">
                     <BoxView Color="Cornsilk" WidthRequest="40"/>
-                    <Label Text="Steps:" />
+                        <Label Text="Steps:"  FontSize="Medium"/>
                 </StackLayout>
             </Border>
                 <Editor x:Name="MethodEditor" Placeholder="Enter steps separated by ';'"
@@ -97,7 +150,7 @@
                     StrokeShape="RoundRectangle 40,0,0,40">
                 <StackLayout Orientation="Horizontal" Spacing="15">
                     <BoxView Color="Cornsilk" WidthRequest="40"/>
-                    <Label Text="Prepping Time (minutes):" />
+                        <Label Text="Prepping Time (minutes):"  FontSize="Medium"/>
                 </StackLayout>
             </Border>
 
@@ -111,7 +164,7 @@
                 StrokeShape="RoundRectangle 40,0,0,40">
                 <StackLayout Orientation="Horizontal" Spacing="15">
                     <BoxView Color="Cornsilk" WidthRequest="40"/>
-                        <Label Text="Cooking Time (minutes):" />
+                        <Label Text="Cooking Time (minutes):" FontSize="Medium" />
                 </StackLayout>
             </Border>
 
@@ -125,7 +178,7 @@
                 StrokeShape="RoundRectangle 40,0,0,40">
                 <StackLayout Orientation="Horizontal" Spacing="15">
                     <BoxView Color="Cornsilk" WidthRequest="40"/>
-                    <Label Text="Total Time:" />
+                        <Label Text="Total Time:"  FontSize="Medium"/>
                 </StackLayout>
             </Border>
                 <Label x:Name="TotalTimeLabel" 
