@@ -2,6 +2,7 @@
 using Proiect.Data;
 using Proiect.Models;
 using Proiect.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -23,27 +24,28 @@ namespace Proiect.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            // Pentru a popula Picker-ul cu rețete din baza de date:
-            
+            // Preia rețetele din baza de date
             RecipeDao recipeDao = new RecipeDao();
-            var dbRecipes = recipeDao.GetAllRecipes();  // preia lista de rețete din DB
+            var dbRecipes = recipeDao.GetAllRecipes();  // Lista completă din DB
 
-
-            // Populează colecțiile pentru Carousel, Picker, Recomandate
+            // Populează AllRecipes
             AllRecipes.Clear();
             foreach (var recipe in dbRecipes)
             {
                 AllRecipes.Add(recipe);
             }
 
-            // Exemplu: pentru Carousel și Recomandate
+            // Top Hottest Recipes: cele mai recente 5 rețete (ordonare descrescătoare după ID)
             TopRecipes.Clear();
-            foreach (var recipe in dbRecipes.Take(5))
+            foreach (var recipe in dbRecipes.OrderByDescending(r => r.Id).Take(5))
             {
                 TopRecipes.Add(recipe);
             }
+
+            // Recommended for You: 5 rețete alese aleatoriu
             RecommendedRecipes.Clear();
-            foreach (var recipe in dbRecipes.Where(r => r.Themes != null && r.Themes.Contains("christmas")).Take(5))
+            // Folosim OrderBy(x => Guid.NewGuid()) pentru a obține o listă "amestecată"
+            foreach (var recipe in dbRecipes.OrderBy(x => Guid.NewGuid()).Take(5))
             {
                 RecommendedRecipes.Add(recipe);
             }
@@ -54,7 +56,6 @@ namespace Proiect.Views
                 .Select(r => r.Category)
                 .Distinct();
 
-            // Populează colecția de categorii cu obiecte Category 
             Categories.Clear();
             foreach (var cat in uniqueCategories)
             {
@@ -65,17 +66,16 @@ namespace Proiect.Views
                 });
             }
 
-            // Exemplu de animație: fade-in pentru header nu cred ca merge
+            // Exemplu de animație: fade-in pentru header (dacă dorești)
             await HeaderLabel.FadeTo(1, 1000);
         }
 
-        //note, hottest ultimele x retete dupa id, recomandate math.random sau ceva de genu
         // Butoanele de filtrare
         private void OnFilterClicked(object sender, EventArgs e)
         {
             var button = sender as Button;
             string filter = button?.CommandParameter?.ToString();
-            //  logica de filtrare a rețetelor în funcție de filtru.
+            // Logica de filtrare a rețetelor în funcție de filtru, după preferințe.
         }
     }
 }

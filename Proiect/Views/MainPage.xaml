@@ -28,7 +28,7 @@
                     <RoundRectangle CornerRadius="10,10,10,10"/>
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Top Hottest Recipes" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    <Label Text="Newest Recipes" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center"/>
                     <CarouselView x:Name="RecipeCarousel" HeightRequest="200" ItemsSource="{Binding TopRecipes}">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
