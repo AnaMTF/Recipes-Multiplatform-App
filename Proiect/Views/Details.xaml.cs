@@ -1,9 +1,18 @@
-namespace Proiect.Views;
+﻿using Proiect.Models;
 
-public partial class Details : ContentPage
+namespace Proiect.Views
 {
-	public Details()
-	{
-		InitializeComponent();
-	}
+    public partial class Details : ContentPage
+    {
+        public Details()
+        {
+            InitializeComponent();
+        }
+
+        public Details(Recipe recipe) : this()
+        {
+            // Set BindingContextul pe rețeta primită
+            BindingContext = recipe;
+        }
+    }
 }

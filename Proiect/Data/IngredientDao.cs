@@ -33,7 +33,7 @@ namespace Proiect.Data
             return conn.Insert(ingredient);
         }
 
-        public int InsertCategories(List<Ingredient> ingredients)
+        public int InsertIngredients(List<Ingredient> ingredients)
         {
             return conn.InsertAll(ingredients);
         }
