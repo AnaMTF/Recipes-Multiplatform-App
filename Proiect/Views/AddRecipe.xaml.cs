@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using Proiect.Data;
 using Proiect.Models;
 using Proiect.Services;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 
 namespace Proiect.Views
@@ -19,16 +21,9 @@ namespace Proiect.Views
         // Colecție pentru ingredientele selectate
         public ObservableCollection<Ingredient> SelectedIngredients { get; set; } = new ObservableCollection<Ingredient>();
 
-        // Liste pentru categorii și teme disponibile (de exemplu, preluate din baza de date; aici folosiți valori demo)
-        public ObservableCollection<string> AvailableCategories { get; set; } = new ObservableCollection<string>
-        {
-            "Aperitive", "Fel Principal", "Desert", "Other"
-        };
-
-        public ObservableCollection<string> AvailableThemes { get; set; } = new ObservableCollection<string>
-        {
-            "christmas", "holiday", "kids", "baking", "other"
-        };
+        // Liste pentru categorii și teme disponibile (acestea vor fi preluate din baza de date)
+        public ObservableCollection<string> AvailableCategories { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> AvailableThemes { get; set; } = new ObservableCollection<string>();
 
         // Colecție pentru temele selectate
         public ObservableCollection<string> SelectedThemes { get; set; } = new ObservableCollection<string>();
@@ -45,7 +40,7 @@ namespace Proiect.Views
             }
         }
 
-        // Totalul de câmpuri obligatorii pentru progress: 9 (vezi explicația de mai jos)
+        // Totalul de câmpuri obligatorii pentru progress: 9
         // 1 - RecipeName, 2 - Description, 3 - Ingredients, 4 - Steps,
         // 5 - PreppingTime, 6 - CookingTime, 7 - Category, 8 - Themes, 9 - Photo.
         int totalFields = 9;
@@ -55,15 +50,32 @@ namespace Proiect.Views
             InitializeComponent();
             BindingContext = this;
 
-            // Inițializează lista de ingrediente preluate din XML (se presupune că IngredientsService.GetIngredient returnează o List<Ingredient>)
+            // Inițializează lista de ingrediente din XML
             listaIngrediente = IngredientsService.GetIngredient(urlIngr);
-
-            // Populează Picker-ul pentru ingrediente
             IngredientPicker.ItemsSource = listaIngrediente;
-            // Leagă lista de ingrediente selectate la CollectionView
             IngredientsList.ItemsSource = SelectedIngredients;
 
-            // Alte inițializări pentru Picker-ul de categorie și de teme (acestea sunt deja setate prin Binding în XAML, dacă ai legat AvailableCategories / AvailableThemes)
+            // Preluare AvailableCategories din baza de date
+            CategoryDao catDao = new CategoryDao(); // constructor parametru-less
+            var dbCategories = catDao.GetAllCategories();
+            AvailableCategories.Clear();
+            foreach (var cat in dbCategories)
+            {
+                AvailableCategories.Add(cat.Name);
+            }
+            if (!AvailableCategories.Contains("Other"))
+                AvailableCategories.Add("Other");
+
+            // Preluare AvailableThemes din baza de date
+            ThemeDao themeDao = new ThemeDao(); // constructor parametru-less
+            var dbThemes = themeDao.GetAllThemes();
+            AvailableThemes.Clear();
+            foreach (var th in dbThemes)
+            {
+                AvailableThemes.Add(th.Name);
+            }
+            if (!AvailableThemes.Contains("other"))
+                AvailableThemes.Add("other");
 
             UpdateProgress();
             UpdateTotalTime();
@@ -76,7 +88,7 @@ namespace Proiect.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        // Actualizează progress bar-ul în funcție de completarea câmpurilor:
+        // Actualizează progress bar-ul în funcție de câmpurile completate
         void UpdateProgress()
         {
             int filled = 0;
@@ -103,9 +115,7 @@ namespace Proiect.Views
                         filled++;
                 }
                 else
-                {
                     filled++;
-                }
             }
 
             // Verificare pentru Themes:
@@ -123,8 +133,7 @@ namespace Proiect.Views
         // Actualizează TotalTime prin suma valorilor din PreppingTime și CookingTime
         void UpdateTotalTime()
         {
-            if (int.TryParse(PreppingTime.Text, out int prep) &&
-                int.TryParse(CookingTime.Text, out int cook))
+            if (int.TryParse(PreppingTime.Text, out int prep) && int.TryParse(CookingTime.Text, out int cook))
             {
                 int total = prep + cook;
                 TotalTimeLabel.Text = total.ToString() + " minutes";
@@ -135,7 +144,7 @@ namespace Proiect.Views
             }
         }
 
-        // Eveniment pentru câmpurile de text (RecipeName, Description, Steps)
+        // Eveniment pentru câmpurile de text
         void OnEntryTextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateProgress();
@@ -151,16 +160,15 @@ namespace Proiect.Views
         // Eveniment pentru schimbarea selecției în Picker-ul de ingrediente
         void IngredientPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Poți adăuga eventual cod suplimentar aici, dacă e necesar.
+            // Eventual cod suplimentar...
         }
 
-        // Adaugă ingredientul selectat în lista de ingrediente
+        // Adaugă ingredientul selectat
         void AddIngredient_Clicked(object sender, EventArgs e)
         {
             if (IngredientPicker.SelectedIndex != -1)
             {
                 var selectedIngredient = listaIngrediente[IngredientPicker.SelectedIndex];
-                // Verifică dacă ingredientul nu a fost deja adăugat (după nume)
                 if (!SelectedIngredients.Any(i => i.IngredientName == selectedIngredient.IngredientName))
                 {
                     SelectedIngredients.Add(selectedIngredient);
@@ -169,7 +177,7 @@ namespace Proiect.Views
             }
         }
 
-        // Eveniment pentru alegerea unei poze pentru rețetă
+        // Handler pentru alegerea unei poze pentru rețetă
         private async void OnPickPhotoClicked(object sender, EventArgs e)
         {
             try
@@ -178,7 +186,6 @@ namespace Proiect.Views
                 {
                     Title = "Select a photo for the recipe"
                 });
-
                 if (result != null)
                 {
                     var stream = await result.OpenReadAsync();
@@ -195,19 +202,16 @@ namespace Proiect.Views
         // Handler pentru Picker-ul de categorii
         void CategoryPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Dacă se alege "Other", se afișează Entry-ul pentru categoria personalizată
             if (CategoryPicker.SelectedItem?.ToString() == "Other")
                 CustomCategoryEntry.IsVisible = true;
             else
                 CustomCategoryEntry.IsVisible = false;
-
             UpdateProgress();
         }
 
         // Handler pentru Picker-ul de teme
         void ThemePicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Dacă se selectează "other" (ignorând diferența de litere, comparăm în minusculă)
             if (ThemePicker.SelectedItem?.ToString().ToLower() == "other")
             {
                 CustomThemeEntry.IsVisible = true;
@@ -218,25 +222,31 @@ namespace Proiect.Views
                 CustomThemeEntry.IsVisible = false;
                 IsCustomThemeVisible = false;
             }
-            // Nu adăugăm tema aici, ci doar o așteptăm de la utilizator.
         }
 
-        // Un singur buton pentru adăugarea temei – acesta va adăuga tema din Picker dacă nu este "other", sau din CustomThemeEntry altfel
+        // Un singur buton pentru adăugarea temei: dacă "other" este selectat, se folosește textul din CustomThemeEntry
         void AddTheme_Clicked(object sender, EventArgs e)
         {
             if (ThemePicker.SelectedIndex != -1)
             {
                 string selectedTheme = ThemePicker.SelectedItem.ToString();
+                ThemeDao themeDao = new ThemeDao(); // constructor parametru-less
+
                 if (selectedTheme.ToLower() == "other")
                 {
-                    // Dacă se alege "other", adăugăm tema personalizată din Entry (dacă este completată)
                     if (!string.IsNullOrWhiteSpace(CustomThemeEntry.Text))
                     {
+                        // Dacă tema personalizată nu există în DB, o inserăm
+                        var existingThemes = themeDao.GetAllThemes();
+                        if (!existingThemes.Any(t => t.Name.Equals(CustomThemeEntry.Text, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            themeDao.InsertTheme(new Theme { Name = CustomThemeEntry.Text });
+                        }
                         if (!SelectedThemes.Contains(CustomThemeEntry.Text))
                         {
                             SelectedThemes.Add(CustomThemeEntry.Text);
-                            CustomThemeEntry.Text = string.Empty;
                         }
+                        CustomThemeEntry.Text = string.Empty;
                     }
                     else
                     {
@@ -250,21 +260,55 @@ namespace Proiect.Views
                         SelectedThemes.Add(selectedTheme);
                     }
                 }
+                // Actualizează AvailableThemes din DB
+                var updatedThemes = themeDao.GetAllThemes();
+                AvailableThemes.Clear();
+                foreach (var th in updatedThemes)
+                    AvailableThemes.Add(th.Name);
+                if (!AvailableThemes.Contains("other"))
+                    AvailableThemes.Add("other");
+
                 UpdateProgress();
             }
         }
 
-        // Salvarea rețetei (exemplu de alertă; aici integrezi logica de salvare în baza de date)
+        // Salvarea rețetei în baza de date
         async void OnSaveClicked(object sender, EventArgs e)
         {
-            // Preluăm categoria: dacă se alege "Other", folosim textul din CustomCategoryEntry, altfel valoarea Picker-ului
+            string dbPath = System.IO.Path.Combine(FileSystem.AppDataDirectory, "recipe.db");
+
+            // Utilizează DAO pentru categorii
+            RecipeDao recipeDao = new RecipeDao();
+            CategoryDao catDao = new CategoryDao();
+
+            // Gestionează categoria
             string category;
             if (CategoryPicker.SelectedItem?.ToString() == "Other")
-                category = CustomCategoryEntry.Text;
+            {
+                if (!string.IsNullOrWhiteSpace(CustomCategoryEntry.Text))
+                {
+                    var existingCategories = catDao.GetAllCategories();
+                    if (!existingCategories.Any(c => c.Name.Equals(CustomCategoryEntry.Text, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        catDao.InsertCategory(new Category
+                        {
+                            Name = CustomCategoryEntry.Text,
+                            ImageUrl = $"https://via.placeholder.com/60.png?text={Uri.EscapeDataString(CustomCategoryEntry.Text)}"
+                        });
+                    }
+                    category = CustomCategoryEntry.Text;
+                }
+                else
+                {
+                    category = "";
+                }
+            }
             else
+            {
                 category = CategoryPicker.SelectedItem?.ToString();
+            }
 
-            // Se preiau și celelalte câmpuri din interfață (exemplu)
+            // Preluare alte câmpuri
             string recipeName = RecipeName.Text;
             string description = Description.Text;
             List<string> stepsList = MethodEditor.Text.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
@@ -272,17 +316,16 @@ namespace Proiect.Views
                                                       .ToList();
             string preppingTime = PreppingTime.Text;
             string cookingTime = CookingTime.Text;
-
             List<string> ingredientsList = SelectedIngredients.Select(i => i.IngredientName).ToList();
             List<string> themesList = SelectedThemes.ToList();
 
-            string totalTime = "no time";
+            string totalTime = "0 minutes";
             if (int.TryParse(preppingTime, out int prep) && int.TryParse(cookingTime, out int cook))
             {
                 totalTime = (prep + cook).ToString() + " Minutes";
             }
 
-            //obiectul recipe
+            // Creează obiectul Recipe
             Recipe newRecipe = new Recipe
             {
                 Name = recipeName,
@@ -295,25 +338,55 @@ namespace Proiect.Views
                 TotalTime = totalTime,
                 Category = category,
                 Themes = themesList
-                // Nu stocăm direct poza în model, deoarece proprietatea ImageUrl e calculată;
-                // dacă vreti putem pastra calea imaginii (trebuie o proprietate suplimentară (gen photoPath))
-
             };
 
-            RecipeDao recipeDao = new RecipeDao();
-            int result =  recipeDao.InsertRecipe(newRecipe);
+            int result = recipeDao.InsertRecipe(newRecipe);
 
-            if(result > 0)
+            if (result > 0)
             {
                 await DisplayAlert("Saved",
                     $"Recipe '{recipeName}' saved successfully!\nCategory: {category}\nThemes: {string.Join(", ", themesList)}",
                     "OK");
+                ClearForm();
             }
             else
             {
                 await DisplayAlert("Error", "Failed to save the recipe.", "OK");
             }
+        }
 
+        /// <summary>
+        /// Resetează toate câmpurile din formular după salvare.
+        /// </summary>
+        void ClearForm()
+        {
+            // Resetează câmpurile text
+            RecipeName.Text = string.Empty;
+            Description.Text = string.Empty;
+            MethodEditor.Text = string.Empty;
+            PreppingTime.Text = string.Empty;
+            CookingTime.Text = string.Empty;
+            TotalTimeLabel.Text = "0 minutes";
+
+            // Resetează pickerele și entry-urile personalizate
+            CategoryPicker.SelectedIndex = -1;
+            CustomCategoryEntry.Text = string.Empty;
+            CustomCategoryEntry.IsVisible = false;
+
+            ThemePicker.SelectedIndex = -1;
+            CustomThemeEntry.Text = string.Empty;
+            CustomThemeEntry.IsVisible = false;
+            IsCustomThemeVisible = false;
+
+            // Golește colecțiile de ingrediente și teme selectate
+            SelectedIngredients.Clear();
+            SelectedThemes.Clear();
+
+            // Resetează imaginea rețetei
+            RecipeImage.Source = null;
+
+            // Actualizează progress bar-ul
+            UpdateProgress();
         }
     }
 }
