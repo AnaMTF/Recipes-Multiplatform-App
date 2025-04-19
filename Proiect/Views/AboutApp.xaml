@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Proiect.Views.AboutApp"
+             Title="About This App"
+             BackgroundColor="#F9F9F9">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="25" Spacing="20" VerticalOptions="Center">
+
+               <Image Source="logo.png"
+                      HeightRequest="150"
+                      HorizontalOptions="Center"
+                      Margin="0,20,0,10"/>
+
+
+            <Label Text="Culinary Creations"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#2E7D32"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Version 1.0"
+                   FontSize="14"
+                   TextColor="Gray"
+                   HorizontalOptions="Center" />
+
+            <Label Text="This app helps you organize, view, and edit your favorite recipes with ease. Create, customize, and save delicious dishes anytime, anywhere."
+                   FontSize="16"
+                   TextColor="#444"
+                   HorizontalTextAlignment="Center" />
+
+            <Label Text="Created by Ana, Marius and Bogdan"
+                   FontSize="14"
+                   TextColor="#777"
+                   HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
