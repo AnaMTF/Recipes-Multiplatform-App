@@ -2,11 +2,86 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.Favourites"
-             Title="Favourites">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Favorite Recipes">
+
+    <Grid RowDefinitions="Auto,*">
+        <Label Text="Your Favorite Recipes" 
+               FontSize="Large" 
+               Margin="20,10"
+               FontAttributes="Bold"
+               Grid.Row="0" />
+
+        <CollectionView Grid.Row="1"
+                      ItemsSource="{Binding FavoriteRecipes}"
+                      SelectionMode="Single"
+                      SelectionChanged="OnRecipeSelected">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="10" Padding="10" CornerRadius="10" HasShadow="False">
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+                            <!-- Imaginea retetei -->
+                            <Image Grid.RowSpan="3" 
+                                 Source="{Binding ImageUrl}"
+                                 Aspect="AspectFill"
+                                 HeightRequest="100" 
+                                 WidthRequest="100" />
+
+                            <!-- Numele retetei -->
+                            <Label Grid.Column="1" 
+                                  Text="{Binding Name}" 
+                                  FontSize="Medium" 
+                                  FontAttributes="Bold"
+                                  TextColor="#333333"
+                                  Margin="10,0,0,5"/>
+
+                            <!-- Descrierea retetei -->
+                            <Label Grid.Row="1" 
+                                  Grid.Column="1" 
+                                  Text="{Binding Description}" 
+                                  MaxLines="2"
+                                  LineBreakMode="TailTruncation"
+                                  TextColor="#666666"
+                                  Margin="10,0,0,5"/>
+
+                            <!-- Autorul -->
+                            <Label Grid.Row="2" 
+                                  Grid.Column="1" 
+                                  Text="{Binding Author, StringFormat='By {0}'}" 
+                                  FontSize="Small"
+                                  TextColor="#999999"
+                                  Margin="10,0,0,0"/>
+
+                            <!-- Sterge din favorite -->
+                            <Button Grid.Row="2" 
+                                   Grid.Column="1" 
+                                   HorizontalOptions="End"
+                                   Text="♥"
+                                   BackgroundColor="Transparent"
+                                   TextColor="Red"
+                                   FontSize="24"
+                                   Clicked="OnRemoveFavoriteClicked"
+                                   CommandParameter="{Binding Id}"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <!-- Empty state when no favorites -->
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="No favorite recipes yet" 
+                          FontSize="Large" 
+                          HorizontalOptions="Center" />
+                    <Label Text="Tap the heart icon on any recipe to add it to your favorites" 
+                          FontSize="Medium"
+                          TextColor="#666666"
+                          HorizontalOptions="Center"
+                          MaxLines="2"
+                          HorizontalTextAlignment="Center"
+                          Margin="40,10" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
 </ContentPage>
