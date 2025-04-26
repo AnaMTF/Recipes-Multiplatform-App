@@ -14,5 +14,12 @@ namespace Proiect.Views
             // Set BindingContextul pe rețeta primită
             BindingContext = recipe;
         }
+
+        public Details(int id)
+        {
+            Id = id;
+        }
+
+        public int Id { get; }
     }
 }

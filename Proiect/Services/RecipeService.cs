@@ -29,5 +29,10 @@ namespace Proiect.Services
                 }
             }
         }
+
+        internal async Task<IEnumerable<object>> GetFavouritesAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

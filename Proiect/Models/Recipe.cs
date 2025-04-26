@@ -29,6 +29,9 @@ namespace Proiect.Models
         [JsonPropertyName("Author")]
         public string Author { get; set; }
 
+        [Column("is_favorite")]
+        public bool IsFavorite { get; set; } = false;
+
         // Pentru Ingredients, vom salva JSON-ul în baza de date.
         [Column("ingredients")]
         public string IngredientsJson { get; set; }
