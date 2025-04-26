@@ -87,6 +87,10 @@ namespace Proiect.Models
             set => ThemesJson = JsonSerializer.Serialize(value);
         }
 
+        [Column("image_url")]
+        [JsonPropertyName("image")]
+        public string ImageUrlDb { get; set; }
+
         // Proprietate calculată pentru a obține un URL pentru imagine.
         // În lipsa unei proprietăți "ImageUrl" în JSON, folosim un placeholder.
         [Ignore]
@@ -94,6 +98,8 @@ namespace Proiect.Models
         {
             get
             {
+                if (!string.IsNullOrEmpty(ImageUrlDb))
+                    return ImageUrlDb;
                 return $"https://firstbenefits.org/wp-content/uploads/2017/10/placeholder-1024x1024.png?text={Uri.EscapeDataString(Name)}";
             }
         }

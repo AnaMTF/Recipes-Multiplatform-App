@@ -29,35 +29,23 @@ namespace Proiect.Views
         {
             base.OnAppearing();
 
-            // Populează baza de date (dacă nu e deja populată) din sursele JSON și XML
             await PopulateDatabaseIfNeededAsync();
 
-            // Preia rețetele din DB
             RecipeDao recipeDao = new RecipeDao();
             var dbRecipes = recipeDao.GetAllRecipes();
 
-            // Populează AllRecipes
             AllRecipes.Clear();
             foreach (var recipe in dbRecipes)
-            {
                 AllRecipes.Add(recipe);
-            }
 
-            // TopRecipes: ultimele 5 rețete adăugate (ordonare descrescătoare după ID)
             TopRecipes.Clear();
             foreach (var recipe in dbRecipes.OrderByDescending(r => r.Id).Take(5))
-            {
                 TopRecipes.Add(recipe);
-            }
 
-            // RecommendedRecipes: 5 rețete alese aleatoriu
             RecommendedRecipes.Clear();
             foreach (var recipe in dbRecipes.OrderBy(x => Guid.NewGuid()).Take(5))
-            {
                 RecommendedRecipes.Add(recipe);
-            }
 
-            // Extrage categoriile unice din DB
             var uniqueCategories = dbRecipes
                 .Where(r => !string.IsNullOrWhiteSpace(r.Category))
                 .Select(r => r.Category)
@@ -73,7 +61,6 @@ namespace Proiect.Views
                 });
             }
 
-            // Ascunde secțiunea de căutare (search results) dacă nu există text
             FilteredRecipes.Clear();
             SearchResultsCollectionView.IsVisible = false;
 
@@ -82,21 +69,38 @@ namespace Proiect.Views
 
         private async Task PopulateDatabaseIfNeededAsync()
         {
-            // Folosește DAO parametru-less
-            // Populare rețete din JSON
             RecipeDao recipeDao = new RecipeDao();
             var dbRecipes = recipeDao.GetAllRecipes();
             RecipeService recipeService = new RecipeService();
             var jsonRecipes = await recipeService.GetRecipesAsync();
-
-            // Verifică dacă DB este populată: compară numele primei rețete, dacă există
+             
             if (!(dbRecipes.Any() && jsonRecipes.Any() &&
-                  dbRecipes.First().Name.Equals(jsonRecipes.First().Name, StringComparison.OrdinalIgnoreCase)))
+                dbRecipes.First().Name.Equals(jsonRecipes.First().Name, StringComparison.OrdinalIgnoreCase)))
             {
-                recipeDao.InsertRecipes(jsonRecipes);
+                // Creăm manual lista cu ImageUrlDb corect setat
+                var recipesToInsert = new List<Recipe>();
+                foreach (var jsonRecipe in jsonRecipes)
+                {
+                    recipesToInsert.Add(new Recipe
+                    {
+                        Name = jsonRecipe.Name,
+                        Url = jsonRecipe.Url,
+                        Description = jsonRecipe.Description,
+                        Author = jsonRecipe.Author,
+                        Ingredients = jsonRecipe.Ingredients,
+                        Method = jsonRecipe.Method,
+                        PreppingTime = jsonRecipe.PreppingTime,
+                        CookingTime = jsonRecipe.CookingTime,
+                        TotalTime = jsonRecipe.TotalTime,
+                        Category = jsonRecipe.Category,
+                        Themes = jsonRecipe.Themes,
+                        ImageUrlDb = jsonRecipe.ImageUrlDb // populăm imaginea
+                    });
+                }
+                recipeDao.InsertRecipes(recipesToInsert);
             }
 
-            // Populează categoriile din rețete
+            // Populează categoriile
             CategoryDao catDao = new CategoryDao();
             var uniqueCats = jsonRecipes
                 .Where(r => !string.IsNullOrWhiteSpace(r.Category))
@@ -115,7 +119,7 @@ namespace Proiect.Views
                 }
             }
 
-            // Populează temele din rețete
+            // Populează temele
             ThemeDao themeDao = new ThemeDao();
             var uniqueThemes = jsonRecipes.SelectMany(r => r.Themes ?? new System.Collections.Generic.List<string>())
                                           .Distinct();
@@ -133,13 +137,12 @@ namespace Proiect.Views
             IngredientDao ingredientDao = new IngredientDao();
             var dbIngredients = ingredientDao.GetAllIngredients();
             if (!(dbIngredients.Any() && xmlIngredients.Any() &&
-                  dbIngredients.First().IngredientName.Equals(xmlIngredients.First().IngredientName, StringComparison.OrdinalIgnoreCase)))
+                dbIngredients.First().IngredientName.Equals(xmlIngredients.First().IngredientName, StringComparison.OrdinalIgnoreCase)))
             {
                 ingredientDao.InsertIngredients(xmlIngredients);
             }
         }
 
-        // Handler pentru SearchBar TextChanged - actualizează colecția filtrată
         void RecipeSearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             string keyword = e.NewTextValue?.ToLower() ?? "";
@@ -161,14 +164,12 @@ namespace Proiect.Views
             }
         }
 
-        // INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        // Handler pentru selecția din CollectionView-ul "Recomandate pentru tine"
         void RecommendedRecipes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection.FirstOrDefault() is Recipe selectedRecipe)
@@ -178,19 +179,13 @@ namespace Proiect.Views
             }
         }
 
-
-        // Handler pentru SelectionChanged în CollectionView-ul de rezultate de căutare
         void SearchResultsCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Obține rețeta selectată
             if (e.CurrentSelection.FirstOrDefault() is Recipe selectedRecipe)
             {
-                // Navighează către pagina de detalii, transmițând obiectul Recipe
                 Navigation.PushAsync(new Details(selectedRecipe));
-                // Resetează selecția
                 ((CollectionView)sender).SelectedItem = null;
             }
         }
-
     }
 }

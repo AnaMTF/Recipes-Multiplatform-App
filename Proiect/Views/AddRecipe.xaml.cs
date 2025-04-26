@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 
 namespace Proiect.Views
 {
@@ -44,6 +46,8 @@ namespace Proiect.Views
         // 1 - RecipeName, 2 - Description, 3 - Ingredients, 4 - Steps,
         // 5 - PreppingTime, 6 - CookingTime, 7 - Category, 8 - Themes, 9 - Photo.
         int totalFields = 9;
+
+        public string imagePath { get; set; } = "https://firstbenefits.org/wp-content/uploads/2017/10/placeholder-1024x1024.png"; // pentru imaginea rețetei
 
         public AddRecipe()
         {
@@ -189,7 +193,18 @@ namespace Proiect.Views
                 if (result != null)
                 {
                     var stream = await result.OpenReadAsync();
-                    RecipeImage.Source = ImageSource.FromStream(() => stream);
+
+                    var fileName = result.FileName;
+                    var path = Path.Combine(FileSystem.CacheDirectory, fileName);
+
+                    using (var fileStream = File.OpenWrite(path))
+                    {
+                        await stream.CopyToAsync(fileStream);
+                    }
+
+                    this.imagePath = path;
+                    RecipeImage.Source = path;
+
                     UpdateProgress();
                 }
             }
@@ -337,7 +352,8 @@ namespace Proiect.Views
                 CookingTime = cookingTime,
                 TotalTime = totalTime,
                 Category = category,
-                Themes = themesList
+                Themes = themesList,
+                ImageUrlDb = this.imagePath
             };
 
             int result = recipeDao.InsertRecipe(newRecipe);

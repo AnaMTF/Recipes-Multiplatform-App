@@ -75,14 +75,27 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Border Stroke="Gray" StrokeThickness="1" Padding="10" Margin="5">
+                                <Border Stroke="Gray" StrokeThickness="1" BackgroundColor="#FFB6C1" Padding="10" Margin="5"
+                                        WidthRequest="120" HeightRequest="100">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10,10,10,10"/>
                                     </Border.StrokeShape>
-                                    <VerticalStackLayout HorizontalOptions="Center">
-                                        <Image Source="{Binding ImageUrl}" HeightRequest="60" WidthRequest="100" Aspect="AspectFill"/>
-                                        <Label Text="{Binding Name}" HorizontalOptions="Center" FontSize="Small"/>
-                                    </VerticalStackLayout>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Text="{Binding Name}" 
+                                               FontSize="Medium"
+                                               FontAttributes="Bold"
+                                               TextColor="Black"
+                                               Grid.Row="1"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"/>
+                                    </Grid>
                                 </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
