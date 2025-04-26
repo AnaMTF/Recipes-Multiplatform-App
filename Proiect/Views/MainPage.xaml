@@ -6,10 +6,12 @@
 
             <!-- Header simplu cu titlu -->
             <Label x:Name="HeaderLabel"
-                   Text="Bine ai venit la Cookbook!" 
+                   Text="Welcome to Culinary Creations!" 
                    FontSize="Large" 
                    HorizontalOptions="Center" 
-                   Opacity="0"/>
+                   Opacity="0"
+                   FontAttributes="Bold"
+                   TextColor="#2EC35F"/>
 
             <!-- Search Bar (cu handler pentru TextChanged) -->
             <SearchBar x:Name="RecipeSearchBar" 
