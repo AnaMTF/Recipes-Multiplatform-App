@@ -1,12 +1,72 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Proiect.Views.EditRecipe"
-             Title="EditRecipe">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:Class="Proiect.Views.EditRecipePage"
+             Title="Edit Recipe"
+             BackgroundColor="#E3F2FD"> <!-- Fundal albastru deschis -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Picker -->
+            <Frame BackgroundColor="White" CornerRadius="12" HasShadow="True" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Select a Recipe"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#1565C0" />
+                    <Picker x:Name="recipePicker"
+                            Title="Choose a recipe"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedIndexChanged="OnRecipeSelected" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Form -->
+            <Frame BackgroundColor="White" CornerRadius="12" HasShadow="True" Padding="15">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label Text="Name" TextColor="#1E88E5" FontAttributes="Bold"/>
+                    <Entry x:Name="nameEntry" Placeholder="Recipe name" BackgroundColor="#E1F5FE"/>
+
+                    <Label Text="Description" TextColor="#1E88E5" FontAttributes="Bold"/>
+                    <Editor x:Name="descriptionEditor" HeightRequest="80"
+                            BackgroundColor="#E1F5FE"
+                            Placeholder="Add description"/>
+
+                    <Label Text="Category" TextColor="#1E88E5" FontAttributes="Bold"/>
+                    <Entry x:Name="categoryEntry" Placeholder="e.g. Dessert" BackgroundColor="#FFF9C4"/>
+
+                    <Label Text="Themes (comma-separated)" TextColor="#1E88E5" FontAttributes="Bold"/>
+                    <Editor x:Name="themesEditor" HeightRequest="60"
+                            BackgroundColor="#F3E5F5"
+                            Placeholder="e.g. Vegan, Quick"/>
+
+                    <Label Text="Ingredients (one per line)" TextColor="#1E88E5" FontAttributes="Bold"/>
+                    <Editor x:Name="ingredientsEditor" HeightRequest="100"
+                            BackgroundColor="#E8F5E9"
+                            Placeholder="e.g. 2 eggs\n200g flour"/>
+
+                    <Label Text="Steps (one per line)" TextColor="#1E88E5" FontAttributes="Bold"/>
+                    <Editor x:Name="methodEditor" HeightRequest="100"
+                            BackgroundColor="#FCE4EC"
+                            Placeholder="e.g. Mix\nBake"/>
+
+                    <Label Text="Prepping Time" TextColor="#1E88E5" FontAttributes="Bold"/>
+                    <Entry x:Name="prepTimeEntry" Placeholder="e.g. 10 min" BackgroundColor="#FFF3E0"/>
+
+                    <Label Text="Cooking Time" TextColor="#1E88E5" FontAttributes="Bold"/>
+                    <Entry x:Name="cookTimeEntry" Placeholder="e.g. 30 min" BackgroundColor="#FFF3E0"/>
+
+                    <Button Text="Save Changes"
+                            Clicked="OnSaveClicked"
+                            BackgroundColor="#43A047"
+                            TextColor="White"
+                            CornerRadius="10"
+                            FontAttributes="Bold"
+                            Padding="12"/>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

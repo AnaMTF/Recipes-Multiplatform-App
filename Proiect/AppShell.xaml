@@ -22,7 +22,7 @@
 		Route="AddRecipe" />
     <ShellContent
 		Title="Edit a Recipe"
-		ContentTemplate="{DataTemplate views:EditRecipe}"
+		ContentTemplate="{DataTemplate views:EditRecipePage}"
 		Route="EditRecipe" />
 	<ShellContent
 		Title="Settings"
