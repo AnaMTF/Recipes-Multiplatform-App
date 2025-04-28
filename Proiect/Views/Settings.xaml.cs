@@ -23,7 +23,24 @@ public partial class Settings : ContentPage
         isDark = !isDark;
         App.Current.UserAppTheme = isDark ? AppTheme.Dark : AppTheme.Light;
         ThemeToggleButton.Text = isDark ? "Switch to Light Theme" : "Switch to Dark Theme";
+
+        // Actualizare dinamică a culorilor
+        if (isDark)
+        {
+            Application.Current.Resources["TextColorPrimary"] = Application.Current.Resources["DarkTextColorPrimary"];
+            Application.Current.Resources["TextColorSecondary"] = Application.Current.Resources["DarkTextColorSecondary"];
+            Application.Current.Resources["FrameBackground"] = Application.Current.Resources["DarkFrameBackground"];
+            Application.Current.Resources["AccentColor"] = Application.Current.Resources["DarkAccentColor"];
+        }
+        else
+        {
+            Application.Current.Resources["TextColorPrimary"] = Application.Current.Resources["LightTextColorPrimary"];
+            Application.Current.Resources["TextColorSecondary"] = Application.Current.Resources["LightTextColorSecondary"];
+            Application.Current.Resources["FrameBackground"] = Application.Current.Resources["LightFrameBackground"];
+            Application.Current.Resources["AccentColor"] = Application.Current.Resources["LightAccentColor"];
+        }
     }
+
 
     private void OnFontSizeChanged(object sender, EventArgs e)
     {

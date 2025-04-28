@@ -27,6 +27,29 @@
     <Color x:Key="Gray600">#404040</Color>
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
+    <Color x:Key="TextColorLight">#000000</Color> <!-- Negru pentru light -->
+    <Color x:Key="TextColorDark">#FFFFFF</Color>  <!-- Alb pentru dark -->
+    <Color x:Key="TextColor">#000000</Color>      <!-- Default la început -->
+    <ResourceDictionary>
+        <!-- Culori pentru Light Theme -->
+        <Color x:Key="LightTextColorPrimary">#000000</Color> <!-- Negru -->
+        <Color x:Key="LightTextColorSecondary">#666666</Color> 
+        <Color x:Key="LightFrameBackground">#FFFFFF</Color> 
+        <Color x:Key="LightAccentColor">#4CAF50</Color> <!-- Verde -->
+
+        <!-- Culori pentru Dark Theme -->
+        <Color x:Key="DarkTextColorPrimary">#FFFFFF</Color> <!-- Alb -->
+        <Color x:Key="DarkTextColorSecondary">#BBBBBB</Color>
+        <Color x:Key="DarkFrameBackground">#121212</Color> 
+        <Color x:Key="DarkAccentColor">#80CBC4</Color> <!-- Verde mai deschis -->
+
+        <!-- Culorile pe care UI-ul le folosește (legătură dinamică) -->
+        <Color x:Key="TextColorPrimary">#000000</Color> <!-- Inițial Light -->
+        <Color x:Key="TextColorSecondary">#666666</Color>
+        <Color x:Key="FrameBackground">#FFFFFF</Color>
+        <Color x:Key="AccentColor">#4CAF50</Color>
+    </ResourceDictionary>
+
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
