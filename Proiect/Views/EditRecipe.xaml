@@ -49,12 +49,12 @@
                     <Label Text="Ingredients" TextColor="#1E88E5" FontAttributes="Bold"/>
                     <Editor x:Name="ingredientsEditor" HeightRequest="100"
                             BackgroundColor="#E8F5E9"
-                            Placeholder="e.g. 2 eggs\n200g flour"/>
+                            Placeholder="e.g. 2 eggs&#10;200g flour"/>
 
                     <Label Text="Steps" TextColor="#1E88E5" FontAttributes="Bold"/>
                     <Editor x:Name="methodEditor" HeightRequest="100"
                             BackgroundColor="#FCE4EC"
-                            Placeholder="e.g. Mix\nBake"/>
+                            Placeholder="e.g. Mix&#10;Bake"/>
 
                     <Label Text="Prepping Time" TextColor="#1E88E5" FontAttributes="Bold"/>
                     <Entry x:Name="prepTimeEntry" Placeholder="e.g. 10 min" BackgroundColor="#FFF3E0"/>
