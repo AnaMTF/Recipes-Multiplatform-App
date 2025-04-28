@@ -13,7 +13,7 @@
                  Grid.Row="0"
                  HeightRequest="20"
                  Margin="10" />
-        
+
         <ScrollView Grid.Row="1">
             <StackLayout Spacing="10" Padding="20" Margin="30">
                 <Label Text="Add a new recipe" FontSize="Large" HorizontalOptions="Center" />
@@ -22,11 +22,11 @@
                     StrokeThickness="2"
                 Padding="5"
                     StrokeShape="RoundRectangle 40,0,0,40">
-                <StackLayout Orientation="Horizontal" Spacing="15">
-                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <BoxView Color="Cornsilk" WidthRequest="40"/>
                         <Label Text="Recipe Name:" FontSize="Medium"/>
-                </StackLayout>
-            </Border>
+                    </StackLayout>
+                </Border>
                 <Entry x:Name="RecipeName" Placeholder="Enter recipe name" 
                TextChanged="OnEntryTextChanged"/>
                 <!-- Description -->
@@ -34,68 +34,68 @@
                     StrokeThickness="2"
                 Padding="5"
                     StrokeShape="RoundRectangle 40,0,0,40">
-                <StackLayout Orientation="Horizontal" Spacing="15">
-                    <BoxView Color="AliceBlue" WidthRequest="40"/>
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <BoxView Color="AliceBlue" WidthRequest="40"/>
                         <Label Text="Description:" FontSize="Medium"/>
-                </StackLayout>
-            </Border>
-            <Editor x:Name="Description" HeightRequest="100"
-                    Placeholder="Enter description"
-                TextChanged="OnEntryTextChanged"/>
+                    </StackLayout>
+                </Border>
+                <Editor x:Name="Description" HeightRequest="100"
+                        Placeholder="Enter description"
+                        TextChanged="OnEntryTextChanged"/>
                 <!-- Recipe Photo Section -->
                 <Border Stroke="Violet" StrokeThickness="2" Padding="5"
                         StrokeShape="RoundRectangle 40,0,0,40">
                     <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="LightGray" WidthRequest="40"/>
+                        <BoxView Color="Lavender" WidthRequest="40"/>
                         <Label Text="Recipe Photo:" FontSize="Medium"/>
                     </StackLayout>
                 </Border>
                 <!-- Selected Image -->
                 <Image x:Name="RecipeImage" HeightRequest="200" Aspect="AspectFill" />
-                <Button Text="Add Photo" Clicked="OnPickPhotoClicked" />
-                <!-- Secțiunea pentru Category -->
+                <Button Text="Add Photo" FontAttributes="Bold" Clicked="OnPickPhotoClicked" BackgroundColor="LightPink" />
+                <!-- Category -->
                 <Border Stroke="Violet"
-        StrokeThickness="2"
-    Padding="5"
-        StrokeShape="RoundRectangle 40,0,0,40">
+                        StrokeThickness="2"
+                        Padding="5"
+                        StrokeShape="RoundRectangle 40,0,0,40">
                     <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="Cornsilk" WidthRequest="40"/>
+                        <BoxView Color="LightGreen" WidthRequest="40"/>
                         <Label Text="Category:" FontSize="Medium" />
                     </StackLayout>
                 </Border>
-                
+
                 <!-- Picker pentru categorii -->
                 <Picker x:Name="CategoryPicker"
-              Title="Selectează o categorie"
-              ItemsSource="{Binding AvailableCategories}"
-              SelectedIndexChanged="CategoryPicker_SelectedIndexChanged"/>
-                <!-- Entry pentru categorie personalizată, vizibil doar dacă s-a ales "Other" -->
+                        Title="Select a category"
+                        ItemsSource="{Binding AvailableCategories}"
+                        SelectedIndexChanged="CategoryPicker_SelectedIndexChanged"/>
+                <!-- Entry pentru categorie personalizata -->
                 <Entry x:Name="CustomCategoryEntry" 
-             Placeholder="Introduceți categoria dorită"
-             IsVisible="False"/>
+                       Placeholder="Enter the desired category"
+                       IsVisible="False"/>
 
-                <!-- Secțiunea pentru Themes -->
+                <!-- Secțiunea pentru themes -->
                 <Border Stroke="Violet"
-    StrokeThickness="2"
-Padding="5"
-    StrokeShape="RoundRectangle 40,0,0,40">
+                        StrokeThickness="2"
+                        Padding="5"
+                        StrokeShape="RoundRectangle 40,0,0,40">
                     <StackLayout Orientation="Horizontal" Spacing="15">
                         <BoxView Color="Cornsilk" WidthRequest="40"/>
                         <Label Text="Themes:" FontSize="Medium" />
                     </StackLayout>
                 </Border>
-                
-                <!-- Picker pentru teme -->
+
+                <!-- Picker pentru themes -->
                 <Picker x:Name="ThemePicker"
-              Title="Selectează o temă"
-              ItemsSource="{Binding AvailableThemes}"
-              SelectedIndexChanged="ThemePicker_SelectedIndexChanged"/>
+                        Title="Select one or more themes"
+                        ItemsSource="{Binding AvailableThemes}"
+                        SelectedIndexChanged="ThemePicker_SelectedIndexChanged"/>
                 <!-- Entry pentru temă personalizată -->
                 <Entry x:Name="CustomThemeEntry" 
-             Placeholder="Introduceți tema dorită"
-             IsVisible="False"/>
+                       Placeholder="Enter the desired theme"
+                       IsVisible="False"/>
                 <!-- Buton pentru adăugarea temei selectate -->
-                <Button Text="Adaugă Tema" Clicked="AddTheme_Clicked"/>
+                <Button Text="Add Theme" FontAttributes="Bold" Clicked="AddTheme_Clicked" BackgroundColor="LightPink"/>
                 <!-- Listă pentru afișarea temelor selectate -->
                 <CollectionView x:Name="ThemesList" ItemsSource="{Binding SelectedThemes}">
                     <CollectionView.ItemTemplate>
@@ -108,20 +108,20 @@ Padding="5"
                 </CollectionView>
                 <!-- Ingredients -->
                 <Border Stroke="Violet"
-                    StrokeThickness="2"
-                Padding="5"
-                    StrokeShape="RoundRectangle 40,0,0,40">
-                <StackLayout Orientation="Horizontal" Spacing="15">
-                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                        StrokeThickness="2"
+                        Padding="5"
+                        StrokeShape="RoundRectangle 40,0,0,40">
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <BoxView Color="AliceBlue" WidthRequest="40"/>
                         <Label Text="Ingredients:"  FontSize="Medium"/>
-                </StackLayout>
-            </Border>
+                    </StackLayout>
+                </Border>
                 <Picker x:Name="IngredientPicker" 
-                Title="Select an ingredient" 
-                SelectedIndexChanged="IngredientPicker_SelectedIndexChanged"/>
-                <Button Text="Add Ingredient" Clicked="AddIngredient_Clicked"/>
+                        Title="Select an ingredient" 
+                        SelectedIndexChanged="IngredientPicker_SelectedIndexChanged"/>
+                <Button Text="Add Ingredient" FontAttributes="Bold" Clicked="AddIngredient_Clicked" BackgroundColor="LightPink"/>
                 <CollectionView x:Name="IngredientsList" 
-                        ItemsSource="{Binding SelectedIngredients}">
+                                ItemsSource="{Binding SelectedIngredients}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal" Spacing="10">
@@ -133,60 +133,59 @@ Padding="5"
                 </CollectionView>
                 <!-- Steps -->
                 <Border Stroke="Violet"
-                    StrokeThickness="2"
-                Padding="5"
-                    StrokeShape="RoundRectangle 40,0,0,40">
-                <StackLayout Orientation="Horizontal" Spacing="15">
-                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                        StrokeThickness="2"
+                        Padding="5"
+                        StrokeShape="RoundRectangle 40,0,0,40">
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <BoxView Color="Lavender" WidthRequest="40"/>
                         <Label Text="Steps:"  FontSize="Medium"/>
-                </StackLayout>
-            </Border>
+                    </StackLayout>
+                </Border>
                 <Editor x:Name="MethodEditor" Placeholder="Enter steps separated by ';'"
                 TextChanged="OnEntryTextChanged" HeightRequest="100"/>
                 <!-- Prepping Time -->
                 <Border Stroke="Violet"
-                    StrokeThickness="2"
-                Padding="5"
-                    StrokeShape="RoundRectangle 40,0,0,40">
-                <StackLayout Orientation="Horizontal" Spacing="15">
-                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                        StrokeThickness="2"
+                        Padding="5"
+                        StrokeShape="RoundRectangle 40,0,0,40">
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <BoxView Color="LightGreen" WidthRequest="40"/>
                         <Label Text="Prepping Time (minutes):"  FontSize="Medium"/>
-                </StackLayout>
-            </Border>
+                    </StackLayout>
+                </Border>
 
                 <Entry x:Name="PreppingTime" Placeholder="e.g., 30" 
-               Keyboard="Numeric"
-               TextChanged="OnTimeTextChanged" />
+                       Keyboard="Numeric"
+                       TextChanged="OnTimeTextChanged" />
                 <!-- Cooking Time -->
                 <Border Stroke="Violet"
-                    StrokeThickness="2"
-                Padding="5"
-                StrokeShape="RoundRectangle 40,0,0,40">
-                <StackLayout Orientation="Horizontal" Spacing="15">
-                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                        StrokeThickness="2"
+                        Padding="5"
+                        StrokeShape="RoundRectangle 40,0,0,40">
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <BoxView Color="Cornsilk" WidthRequest="40"/>
                         <Label Text="Cooking Time (minutes):" FontSize="Medium" />
-                </StackLayout>
-            </Border>
+                    </StackLayout>
+                </Border>
 
                 <Entry x:Name="CookingTime" Placeholder="e.g., 60" 
-               Keyboard="Numeric"
-               TextChanged="OnTimeTextChanged" />
+                       Keyboard="Numeric"
+                       TextChanged="OnTimeTextChanged" />
                 <!-- Total Time -->
                 <Border Stroke="Violet"
-                    StrokeThickness="2"
-                Padding="5"
-                StrokeShape="RoundRectangle 40,0,0,40">
-                <StackLayout Orientation="Horizontal" Spacing="15">
-                    <BoxView Color="Cornsilk" WidthRequest="40"/>
+                        StrokeThickness="2"
+                        Padding="5"
+                        StrokeShape="RoundRectangle 40,0,0,40">
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <BoxView Color="AliceBlue" WidthRequest="40"/>
                         <Label Text="Total Time:"  FontSize="Medium"/>
-                </StackLayout>
-            </Border>
+                    </StackLayout>
+                </Border>
                 <Label x:Name="TotalTimeLabel" 
-               FontAttributes="Bold" 
-               Text="0 minutes" />
-
-                <Button Text="Save" Clicked="OnSaveClicked"/>
-        </StackLayout>
-    </ScrollView>
+                       FontAttributes="Bold" 
+                       Text="0 minutes" />
+                <Button Text="Save" FontAttributes="Bold" Clicked="OnSaveClicked" BackgroundColor="LightPink"/>
+            </StackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>

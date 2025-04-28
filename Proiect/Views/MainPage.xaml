@@ -4,7 +4,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
 
-            <!-- Header simplu cu titlu -->
+            <!-- Header titlu -->
             <Label x:Name="HeaderLabel"
                    Text="Welcome to Culinary Creations!" 
                    FontSize="Large" 
@@ -13,12 +13,12 @@
                    FontAttributes="Bold"
                    TextColor="#2EC35F"/>
 
-            <!-- Search Bar (cu handler pentru TextChanged) -->
+            <!-- Search Bar-->
             <SearchBar x:Name="RecipeSearchBar" 
-                       Placeholder="Caută rețetă" 
+                       Placeholder="Search Recipe" 
                        TextChanged="RecipeSearchBar_TextChanged"/>
 
-            <!-- Secțiune pentru rezultate de căutare -->
+            <!-- Secțiune pentru rezultatele de la search-->
             <CollectionView x:Name="SearchResultsCollectionView"
                 IsVisible="False"
                 ItemsSource="{Binding FilteredRecipes}"
@@ -34,7 +34,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <!-- Secțiune: Top Hottest Recipes (fundal roșu) -->
+            <!-- Secțiune: Top Hottest Recipes -->
             <Border Stroke="Red" StrokeThickness="2" BackgroundColor="LightCoral" Padding="10">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10,10,10,10"/>
@@ -64,13 +64,13 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Secțiune: Categorii (fundal roz) -->
+            <!-- Secțiune: Categorii-->
             <Border Stroke="HotPink" StrokeThickness="2" BackgroundColor="MistyRose" Padding="10">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10,10,10,10"/>
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Categorii" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    <Label Text="Categories" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center"/>
                     <CollectionView ItemsSource="{Binding Categories}" HeightRequest="120">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
@@ -105,13 +105,13 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Secțiune: Recomandate pentru tine (fundal galben) -->
+            <!-- Secțiune: Recomandate pentru tine-->
             <Border Stroke="Orange" StrokeThickness="2" BackgroundColor="LightYellow" Padding="10">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10,10,10,10"/>
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Recomandate pentru tine" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    <Label Text="We think you might like these recipes :)" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center"/>
                     <CollectionView x:Name="RecommendedRecipesCollectionView" 
                         ItemsSource="{Binding RecommendedRecipes}" 
                         ItemsLayout="HorizontalList" 
