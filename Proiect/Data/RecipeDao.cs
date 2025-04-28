@@ -61,5 +61,10 @@ namespace Proiect.Data
             }
             return 0;
         }
+
+        public int UpdateRecipe(Recipe recipe)
+        {
+            return conn.Update(recipe); // simplu și corect
+        }
     }
 }
