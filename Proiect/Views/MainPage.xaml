@@ -87,7 +87,9 @@
                            FontAttributes="Bold"
                            HorizontalOptions="Center" />
                     
-                    <CollectionView ItemsSource="{Binding Categories}" HeightRequest="120">
+                    <CollectionView ItemsSource="{Binding Categories}" HeightRequest="120"
+                                    SelectionMode="Single"
+                                    SelectionChanged="OnCategorySelected">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
                         </CollectionView.ItemsLayout>

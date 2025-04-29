@@ -170,6 +170,16 @@ namespace Proiect.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        void OnCategorySelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection.FirstOrDefault() is Category selectedCategory)
+            {
+                Navigation.PushAsync(new CategoryRecipes(selectedCategory.Name));
+                ((CollectionView)sender).SelectedItem = null;
+            }
+        }
+
+
         void RecommendedRecipes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection.FirstOrDefault() is Recipe selectedRecipe)

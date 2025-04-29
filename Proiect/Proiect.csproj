@@ -74,6 +74,9 @@
 	  <MauiXaml Update="Views\AddRecipe.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\CategoryRecipes.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Details.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
