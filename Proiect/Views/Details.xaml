@@ -2,11 +2,139 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.Details"
-             Title="Details">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Recipe Details">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="16" Padding="20">
+            <!-- Header -->
+            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                <Label x:Name="RecipeName" 
+                       Text="{Binding Name}" 
+                       FontSize="24" 
+                       FontAttributes="Bold"
+                       Grid.Row="0"
+                       Grid.Column="0"/>
+
+                <!-- Favorite -->
+                <Button x:Name="FavoriteButton"
+                        Text="♡"
+                        FontSize="24"
+                        BackgroundColor="Transparent"
+                        TextColor="Gray"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Clicked="OnFavoriteClicked"/>
+
+                <Label Text="{Binding Author, StringFormat='By {0}'}"
+                       FontSize="16"
+                       TextColor="Gray"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"/>
+            </Grid>
+
+            <!-- Imagine -->
+            <Frame CornerRadius="10" Padding="0" IsClippedToBounds="True" HeightRequest="200">
+                <Image Aspect="AspectFill" Source="{Binding ImageUrl}"/>
+            </Frame>
+
+            <!-- Descriere -->
+            <Frame BorderColor="LightGray" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Description" FontAttributes="Bold" FontSize="18"/>
+                    <Label Text="{Binding Description}" FontSize="16"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Info despre timp -->
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                <Label Text="Prep Time" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"
+                       Grid.Column="0" 
+                       Grid.Row="0"/>
+
+                <Label Text="Cook Time" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"
+                       Grid.Column="1" 
+                       Grid.Row="0"/>
+
+                <Label Text="Total Time" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"
+                       Grid.Column="2" 
+                       Grid.Row="0"/>
+
+                <Label Text="{Binding PreppingTime}" 
+                       HorizontalOptions="Center"
+                       Grid.Column="0" 
+                       Grid.Row="1"/>
+
+                <Label Text="{Binding CookingTime}" 
+                       HorizontalOptions="Center"
+                       Grid.Column="1" 
+                       Grid.Row="1"/>
+
+                <Label Text="{Binding TotalTime}" 
+                       HorizontalOptions="Center"
+                       Grid.Column="2" 
+                       Grid.Row="1"/>
+            </Grid>
+
+            <!-- Sectiunea ingrediente -->
+            <Frame BorderColor="LightGray" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Ingredients" FontAttributes="Bold" FontSize="18"/>
+                    <CollectionView ItemsSource="{Binding Ingredients}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="5">
+                                    <Label Text="{Binding .}" FontSize="16"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Sectiunea metoda -->
+            <Frame BorderColor="LightGray" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Method" FontAttributes="Bold" FontSize="18"/>
+                    <CollectionView ItemsSource="{Binding Method}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="5">
+                                    <Label Text="{Binding .}" FontSize="16"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Categorie si tema -->
+            <Frame BorderColor="LightGray" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Category" FontAttributes="Bold" FontSize="18"/>
+                    <Label Text="{Binding Category}" FontSize="16"/>
+
+                    <Label Text="Themes" FontAttributes="Bold" FontSize="18" Margin="0,10,0,0"/>
+                    <CollectionView ItemsSource="{Binding Themes}" HeightRequest="40">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="#f0f0f0" Padding="10,5" CornerRadius="15">
+                                    <Label Text="{Binding .}" FontSize="14"/>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
