@@ -2,26 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.Details"
-             Title="Recipe Details"
-             BackgroundColor="#dbcdb5">
+             Title="Recipe Details">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!-- Custom color palette for cooking app -->
-            <Color x:Key="PrimaryColor">#ed6e3a</Color>
-            <!-- Warm Orange -->
-            <Color x:Key="SecondaryColor">#6c9e4f</Color>
-            <!-- Fresh Green -->
-            <Color x:Key="BackgroundColor">#dbcdb5</Color>
-            <!-- Soft Cream -->
-            <Color x:Key="AccentColor">#a4330d</Color>
-            <!-- Deep Terracotta -->
-            <Color x:Key="TextColor">#5e3c2c</Color>
-            <!-- Rich Brown -->
-            <Color x:Key="LightAccentColor">#e9b08e</Color>
-            <!-- Light Peach -->
+            <!-- Light Theme Colors -->
+            <Color x:Key="PageBackgroundLight">#dbcdb5</Color>
+            <Color x:Key="PrimaryColorLight">#ed6e3a</Color>
+            <Color x:Key="SecondaryColorLight">#6c9e4f</Color>
+            <Color x:Key="TextColorLight">#5e3c2c</Color>
+            <Color x:Key="AccentColorLight">#a4330d</Color>
+            <Color x:Key="LightAccentColorLight">#e9b08e</Color>
+            <Color x:Key="CardBackgroundLight">White</Color>
+
+            <!-- Dark Theme Colors -->
+            <Color x:Key="PageBackgroundDark">#2d2d2d</Color>
+            <Color x:Key="PrimaryColorDark">#ff8c5a</Color>
+            <Color x:Key="SecondaryColorDark">#8bc573</Color>
+            <Color x:Key="TextColorDark">#e6dfd7</Color>
+            <Color x:Key="AccentColorDark">#ff6347</Color>
+            <Color x:Key="LightAccentColorDark">#744838</Color>
+            <Color x:Key="CardBackgroundDark">#3d3d3d</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
+
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="{StaticResource PageBackgroundLight}" 
+                         Dark="{StaticResource PageBackgroundDark}"/>
+    </ContentPage.BackgroundColor>
 
     <ScrollView>
         <VerticalStackLayout Spacing="16" Padding="20">
@@ -31,7 +39,8 @@
                        Text="{Binding Name}" 
                        FontSize="28" 
                        FontAttributes="Bold"
-                       TextColor="{StaticResource TextColor}"
+                       TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                Dark={StaticResource TextColorDark}}"
                        Grid.Row="0"
                        Grid.Column="0"/>
 
@@ -40,14 +49,16 @@
                         Text="♡"
                         FontSize="28"
                         BackgroundColor="Transparent"
-                        TextColor="{StaticResource AccentColor}"
+                        TextColor="{AppThemeBinding Light={StaticResource AccentColorLight}, 
+                                                 Dark={StaticResource AccentColorDark}}"
                         Grid.Row="0"
                         Grid.Column="1"
                         Clicked="OnFavoriteClicked"/>
 
                 <Label Text="{Binding Author, StringFormat='By {0}'}"
                        FontSize="16"
-                       TextColor="{StaticResource TextColor}"
+                       TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                Dark={StaticResource TextColorDark}}"
                        Opacity="0.8"
                        Grid.Row="1"
                        Grid.Column="0"
@@ -59,14 +70,17 @@
                    Padding="0" 
                    IsClippedToBounds="True" 
                    HeightRequest="200"
-                   BorderColor="{StaticResource TextColor}"
+                   BorderColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                             Dark={StaticResource TextColorDark}}"
                    HasShadow="True">
                 <Image Aspect="AspectFill" Source="{Binding ImageUrl}"/>
             </Frame>
 
             <!-- Description Section -->
-            <Frame BorderColor="{StaticResource PrimaryColor}" 
-                   BackgroundColor="White" 
+            <Frame BorderColor="{AppThemeBinding Light={StaticResource PrimaryColorLight}, 
+                                              Dark={StaticResource PrimaryColorDark}}" 
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, 
+                                                  Dark={StaticResource CardBackgroundDark}}"
                    Opacity="0.9"
                    CornerRadius="10" 
                    Padding="15"
@@ -75,15 +89,18 @@
                     <Label Text="Description" 
                            FontAttributes="Bold" 
                            FontSize="18"
-                           TextColor="{StaticResource PrimaryColor}"/>
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight}, 
+                                                    Dark={StaticResource PrimaryColorDark}}"/>
                     <Label Text="{Binding Description}" 
                            FontSize="16"
-                           TextColor="{StaticResource TextColor}"/>
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                    Dark={StaticResource TextColorDark}}"/>
                 </VerticalStackLayout>
             </Frame>
 
             <!-- Time Information -->
-            <Frame BackgroundColor="{StaticResource LightAccentColor}" 
+            <Frame BackgroundColor="{AppThemeBinding Light={StaticResource LightAccentColorLight}, 
+                                                  Dark={StaticResource LightAccentColorDark}}" 
                    Opacity="0.9"
                    CornerRadius="10" 
                    Padding="15"
@@ -92,47 +109,55 @@
                     <Label Text="Prep Time" 
                            FontAttributes="Bold" 
                            HorizontalOptions="Center"
-                           TextColor="{StaticResource TextColor}"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                    Dark={StaticResource TextColorDark}}"
                            Grid.Column="0" 
                            Grid.Row="0"/>
 
                     <Label Text="Cook Time" 
                            FontAttributes="Bold" 
                            HorizontalOptions="Center"
-                           TextColor="{StaticResource TextColor}"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                    Dark={StaticResource TextColorDark}}"
                            Grid.Column="1" 
                            Grid.Row="0"/>
 
                     <Label Text="Total Time" 
                            FontAttributes="Bold" 
                            HorizontalOptions="Center"
-                           TextColor="{StaticResource TextColor}"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                    Dark={StaticResource TextColorDark}}"
                            Grid.Column="2" 
                            Grid.Row="0"/>
 
                     <Label Text="{Binding PreppingTime}" 
                            HorizontalOptions="Center"
-                           TextColor="{StaticResource TextColor}"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                    Dark={StaticResource TextColorDark}}"
                            Grid.Column="0" 
                            Grid.Row="1"/>
 
                     <Label Text="{Binding CookingTime}" 
                            HorizontalOptions="Center"
-                           TextColor="{StaticResource TextColor}"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                    Dark={StaticResource TextColorDark}}"
                            Grid.Column="1" 
                            Grid.Row="1"/>
 
                     <Label Text="{Binding TotalTime}" 
                            HorizontalOptions="Center"
-                           TextColor="{StaticResource TextColor}"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                    Dark={StaticResource TextColorDark}}"
                            Grid.Column="2" 
                            Grid.Row="1"/>
                 </Grid>
             </Frame>
 
             <!-- Ingredients Section -->
-            <Frame BorderColor="{StaticResource SecondaryColor}" 
-                   BackgroundColor="White" 
+            <Frame BorderColor="{AppThemeBinding Light={StaticResource SecondaryColorLight}, 
+                                              Dark={StaticResource SecondaryColorDark}}" 
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, 
+                                                  Dark={StaticResource CardBackgroundDark}}"
                    Opacity="0.9"
                    CornerRadius="10" 
                    Padding="15"
@@ -141,14 +166,16 @@
                     <Label Text="Ingredients" 
                            FontAttributes="Bold" 
                            FontSize="18"
-                           TextColor="{StaticResource SecondaryColor}"/>
+                           TextColor="{AppThemeBinding Light={StaticResource SecondaryColorLight}, 
+                                                    Dark={StaticResource SecondaryColorDark}}"/>
                     <CollectionView ItemsSource="{Binding Ingredients}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Padding="8,5">
                                     <Label Text="{Binding .}" 
                                            FontSize="16"
-                                           TextColor="{StaticResource TextColor}"/>
+                                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                                    Dark={StaticResource TextColorDark}}"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -157,8 +184,10 @@
             </Frame>
 
             <!-- Method Section -->
-            <Frame BorderColor="{StaticResource PrimaryColor}" 
-                   BackgroundColor="White" 
+            <Frame BorderColor="{AppThemeBinding Light={StaticResource PrimaryColorLight}, 
+                                              Dark={StaticResource PrimaryColorDark}}" 
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, 
+                                                  Dark={StaticResource CardBackgroundDark}}"
                    Opacity="0.9"
                    CornerRadius="10" 
                    Padding="15"
@@ -167,14 +196,16 @@
                     <Label Text="Method" 
                            FontAttributes="Bold" 
                            FontSize="18"
-                           TextColor="{StaticResource PrimaryColor}"/>
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight}, 
+                                                    Dark={StaticResource PrimaryColorDark}}"/>
                     <CollectionView ItemsSource="{Binding Method}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Padding="8,5">
                                     <Label Text="{Binding .}" 
                                            FontSize="16"
-                                           TextColor="{StaticResource TextColor}"/>
+                                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                                    Dark={StaticResource TextColorDark}}"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -183,8 +214,10 @@
             </Frame>
 
             <!-- Category & Themes Section -->
-            <Frame BorderColor="{StaticResource SecondaryColor}" 
-                   BackgroundColor="White" 
+            <Frame BorderColor="{AppThemeBinding Light={StaticResource SecondaryColorLight}, 
+                                              Dark={StaticResource SecondaryColorDark}}" 
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, 
+                                                  Dark={StaticResource CardBackgroundDark}}"
                    Opacity="0.9"
                    CornerRadius="10" 
                    Padding="15"
@@ -194,30 +227,36 @@
                     <Label Text="Category" 
                            FontAttributes="Bold" 
                            FontSize="18"
-                           TextColor="{StaticResource SecondaryColor}"/>
+                           TextColor="{AppThemeBinding Light={StaticResource SecondaryColorLight}, 
+                                                    Dark={StaticResource SecondaryColorDark}}"/>
                     <Label Text="{Binding Category}" 
                            FontSize="16"
-                           TextColor="{StaticResource TextColor}"/>
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                    Dark={StaticResource TextColorDark}}"/>
 
                     <Label Text="Themes" 
                            FontAttributes="Bold" 
                            FontSize="18" 
                            Margin="0,10,0,0"
-                           TextColor="{StaticResource SecondaryColor}"/>
+                           TextColor="{AppThemeBinding Light={StaticResource SecondaryColorLight}, 
+                                                    Dark={StaticResource SecondaryColorDark}}"/>
                     <CollectionView ItemsSource="{Binding Themes}" HeightRequest="45">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame BackgroundColor="{StaticResource LightAccentColor}" 
+                                <Frame BackgroundColor="{AppThemeBinding Light={StaticResource LightAccentColorLight}, 
+                                                                      Dark={StaticResource LightAccentColorDark}}" 
                                        Padding="12,5" 
                                        CornerRadius="15"
                                        HasShadow="False"
-                                       BorderColor="{StaticResource AccentColor}">
+                                       BorderColor="{AppThemeBinding Light={StaticResource AccentColorLight}, 
+                                                                  Dark={StaticResource AccentColorDark}}">
                                     <Label Text="{Binding .}" 
                                            FontSize="14"
-                                           TextColor="{StaticResource TextColor}"/>
+                                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                                    Dark={StaticResource TextColorDark}}"/>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

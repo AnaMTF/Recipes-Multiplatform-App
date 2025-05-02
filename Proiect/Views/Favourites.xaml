@@ -2,37 +2,45 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.Favourites"
-             Title="Favorite Recipes"
-             BackgroundColor="#dbcdb5">
+             Title="Favorite Recipes">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!-- Custom color palette for cooking app -->
-            <Color x:Key="PrimaryColor">#ed6e3a</Color>
-            <!-- Warm Orange -->
-            <Color x:Key="SecondaryColor">#6c9e4f</Color>
-            <!-- Fresh Green -->
-            <Color x:Key="BackgroundColor">#dbcdb5</Color>
-            <!-- Soft Cream -->
-            <Color x:Key="AccentColor">#a4330d</Color>
-            <!-- Deep Terracotta -->
-            <Color x:Key="TextColor">#5e3c2c</Color>
-            <!-- Rich Brown -->
-            <Color x:Key="LightAccentColor">#e9b08e</Color>
-            <!-- Light Peach -->
+            <!-- Light Theme Colors -->
+            <Color x:Key="PageBackgroundLight">#dbcdb5</Color>
+            <Color x:Key="PrimaryColorLight">#ed6e3a</Color>
+            <Color x:Key="SecondaryColorLight">#6c9e4f</Color>
+            <Color x:Key="TextColorLight">#5e3c2c</Color>
+            <Color x:Key="AccentColorLight">#a4330d</Color>
+            <Color x:Key="LightAccentColorLight">#e9b08e</Color>
+            <Color x:Key="CardBackgroundLight">White</Color>
+
+            <!-- Dark Theme Colors -->
+            <Color x:Key="PageBackgroundDark">#2d2d2d</Color>
+            <Color x:Key="PrimaryColorDark">#ff8c5a</Color>
+            <Color x:Key="SecondaryColorDark">#8bc573</Color>
+            <Color x:Key="TextColorDark">#e6dfd7</Color>
+            <Color x:Key="AccentColorDark">#ff6347</Color>
+            <Color x:Key="LightAccentColorDark">#744838</Color>
+            <Color x:Key="CardBackgroundDark">#3d3d3d</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
+
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="{StaticResource PageBackgroundLight}" 
+                         Dark="{StaticResource PageBackgroundDark}"/>
+    </ContentPage.BackgroundColor>
 
     <Grid RowDefinitions="Auto,*">
         <Label Text="Your Favorite Recipes" 
                FontSize="28" 
                Margin="20,15"
                FontAttributes="Bold"
-               TextColor="{StaticResource TextColor}"
+               TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                        Dark={StaticResource TextColorDark}}"
                Grid.Row="0" />
 
         <CollectionView Grid.Row="1"
-                      x:Name="FavoritesCollection"
                       ItemsSource="{Binding FavoriteRecipes}"
                       SelectionMode="Single"
                       SelectionChanged="OnRecipeSelected"
@@ -44,8 +52,10 @@
                            Padding="15" 
                            CornerRadius="12" 
                            HasShadow="True"
-                           BorderColor="{StaticResource PrimaryColor}"
-                           BackgroundColor="White">
+                           BorderColor="{AppThemeBinding Light={StaticResource PrimaryColorLight}, 
+                                                      Dark={StaticResource PrimaryColorDark}}"
+                           BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, 
+                                                          Dark={StaticResource CardBackgroundDark}}">
 
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnFrameTapped" 
@@ -58,7 +68,8 @@
                                   CornerRadius="8"
                                   IsClippedToBounds="True"
                                   Padding="0"
-                                  BorderColor="{StaticResource TextColor}">
+                                  BorderColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                           Dark={StaticResource TextColorDark}}">
                                 <Image Source="{Binding ImageUrl}"
                                      Aspect="AspectFill"
                                      HeightRequest="110" 
@@ -70,7 +81,8 @@
                                   Text="{Binding Name}" 
                                   FontSize="18" 
                                   FontAttributes="Bold"
-                                  TextColor="{StaticResource TextColor}"
+                                  TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                           Dark={StaticResource TextColorDark}}"
                                   Margin="15,0,0,5"/>
 
                             <!-- Recipe Description -->
@@ -79,7 +91,8 @@
                                   Text="{Binding Description}" 
                                   MaxLines="2"
                                   LineBreakMode="TailTruncation"
-                                  TextColor="{StaticResource TextColor}"
+                                  TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                           Dark={StaticResource TextColorDark}}"
                                   Opacity="0.8"
                                   Margin="15,0,0,5"/>
 
@@ -88,7 +101,8 @@
                                   Grid.Column="1" 
                                   Text="{Binding Author, StringFormat='By {0}'}" 
                                   FontSize="14"
-                                  TextColor="{StaticResource TextColor}"
+                                  TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                           Dark={StaticResource TextColorDark}}"
                                   Opacity="0.7"
                                   Margin="15,0,0,0"/>
 
@@ -98,7 +112,8 @@
                                    HorizontalOptions="End"
                                    Text="♥"
                                    BackgroundColor="Transparent"
-                                   TextColor="{StaticResource AccentColor}"
+                                   TextColor="{AppThemeBinding Light={StaticResource AccentColorLight}, 
+                                                           Dark={StaticResource AccentColorDark}}"
                                    FontSize="28"
                                    Margin="0,-10,0,0"
                                    Padding="10"
@@ -111,24 +126,28 @@
 
             <!-- Empty state when no favorites -->
             <CollectionView.EmptyView>
-                <Frame BackgroundColor="White" 
+                <Frame BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, 
+                                                      Dark={StaticResource CardBackgroundDark}}" 
                       Opacity="0.9"
                       CornerRadius="15"
                       Margin="20,10"
                       Padding="20"
-                      BorderColor="{StaticResource PrimaryColor}"
+                      BorderColor="{AppThemeBinding Light={StaticResource PrimaryColorLight}, 
+                                                  Dark={StaticResource PrimaryColorDark}}"
                       HasShadow="True">
                     <VerticalStackLayout VerticalOptions="Center" 
                                         HorizontalOptions="Center" 
                                         Spacing="15">
                         <Label Text="No favorite recipes yet" 
                               FontSize="24" 
-                              TextColor="{StaticResource PrimaryColor}"
+                              TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight}, 
+                                                       Dark={StaticResource PrimaryColorDark}}"
                               FontAttributes="Bold"
                               HorizontalOptions="Center" />
                         <Label Text="Tap the heart icon on any recipe to add it to your favorites" 
                               FontSize="16"
-                              TextColor="{StaticResource TextColor}"
+                              TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, 
+                                                       Dark={StaticResource TextColorDark}}"
                               HorizontalOptions="Center"
                               MaxLines="2"
                               HorizontalTextAlignment="Center" />
