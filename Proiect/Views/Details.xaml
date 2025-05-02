@@ -2,95 +2,153 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.Details"
-             Title="Recipe Details">
+             Title="Recipe Details"
+             BackgroundColor="#dbcdb5">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Custom color palette for cooking app -->
+            <Color x:Key="PrimaryColor">#ed6e3a</Color>
+            <!-- Warm Orange -->
+            <Color x:Key="SecondaryColor">#6c9e4f</Color>
+            <!-- Fresh Green -->
+            <Color x:Key="BackgroundColor">#dbcdb5</Color>
+            <!-- Soft Cream -->
+            <Color x:Key="AccentColor">#a4330d</Color>
+            <!-- Deep Terracotta -->
+            <Color x:Key="TextColor">#5e3c2c</Color>
+            <!-- Rich Brown -->
+            <Color x:Key="LightAccentColor">#e9b08e</Color>
+            <!-- Light Peach -->
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout Spacing="16" Padding="20">
-            <!-- Header -->
+            <!-- Recipe Header Section -->
             <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
                 <Label x:Name="RecipeName" 
                        Text="{Binding Name}" 
-                       FontSize="24" 
+                       FontSize="28" 
                        FontAttributes="Bold"
+                       TextColor="{StaticResource TextColor}"
                        Grid.Row="0"
                        Grid.Column="0"/>
 
-                <!-- Favorite -->
+                <!-- Favorite Button -->
                 <Button x:Name="FavoriteButton"
                         Text="♡"
-                        FontSize="24"
+                        FontSize="28"
                         BackgroundColor="Transparent"
-                        TextColor="Gray"
+                        TextColor="{StaticResource AccentColor}"
                         Grid.Row="0"
                         Grid.Column="1"
                         Clicked="OnFavoriteClicked"/>
 
                 <Label Text="{Binding Author, StringFormat='By {0}'}"
                        FontSize="16"
-                       TextColor="Gray"
+                       TextColor="{StaticResource TextColor}"
+                       Opacity="0.8"
                        Grid.Row="1"
                        Grid.Column="0"
                        Grid.ColumnSpan="2"/>
             </Grid>
 
-            <!-- Imagine -->
-            <Frame CornerRadius="10" Padding="0" IsClippedToBounds="True" HeightRequest="200">
+            <!-- Recipe Image -->
+            <Frame CornerRadius="10" 
+                   Padding="0" 
+                   IsClippedToBounds="True" 
+                   HeightRequest="200"
+                   BorderColor="{StaticResource TextColor}"
+                   HasShadow="True">
                 <Image Aspect="AspectFill" Source="{Binding ImageUrl}"/>
             </Frame>
 
-            <!-- Descriere -->
-            <Frame BorderColor="LightGray" CornerRadius="10" Padding="15">
+            <!-- Description Section -->
+            <Frame BorderColor="{StaticResource PrimaryColor}" 
+                   BackgroundColor="White" 
+                   Opacity="0.9"
+                   CornerRadius="10" 
+                   Padding="15"
+                   HasShadow="True">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="Description" FontAttributes="Bold" FontSize="18"/>
-                    <Label Text="{Binding Description}" FontSize="16"/>
+                    <Label Text="Description" 
+                           FontAttributes="Bold" 
+                           FontSize="18"
+                           TextColor="{StaticResource PrimaryColor}"/>
+                    <Label Text="{Binding Description}" 
+                           FontSize="16"
+                           TextColor="{StaticResource TextColor}"/>
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Info despre timp -->
-            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
-                <Label Text="Prep Time" 
-                       FontAttributes="Bold" 
-                       HorizontalOptions="Center"
-                       Grid.Column="0" 
-                       Grid.Row="0"/>
+            <!-- Time Information -->
+            <Frame BackgroundColor="{StaticResource LightAccentColor}" 
+                   Opacity="0.9"
+                   CornerRadius="10" 
+                   Padding="15"
+                   HasShadow="True">
+                <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                    <Label Text="Prep Time" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource TextColor}"
+                           Grid.Column="0" 
+                           Grid.Row="0"/>
 
-                <Label Text="Cook Time" 
-                       FontAttributes="Bold" 
-                       HorizontalOptions="Center"
-                       Grid.Column="1" 
-                       Grid.Row="0"/>
+                    <Label Text="Cook Time" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource TextColor}"
+                           Grid.Column="1" 
+                           Grid.Row="0"/>
 
-                <Label Text="Total Time" 
-                       FontAttributes="Bold" 
-                       HorizontalOptions="Center"
-                       Grid.Column="2" 
-                       Grid.Row="0"/>
+                    <Label Text="Total Time" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource TextColor}"
+                           Grid.Column="2" 
+                           Grid.Row="0"/>
 
-                <Label Text="{Binding PreppingTime}" 
-                       HorizontalOptions="Center"
-                       Grid.Column="0" 
-                       Grid.Row="1"/>
+                    <Label Text="{Binding PreppingTime}" 
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource TextColor}"
+                           Grid.Column="0" 
+                           Grid.Row="1"/>
 
-                <Label Text="{Binding CookingTime}" 
-                       HorizontalOptions="Center"
-                       Grid.Column="1" 
-                       Grid.Row="1"/>
+                    <Label Text="{Binding CookingTime}" 
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource TextColor}"
+                           Grid.Column="1" 
+                           Grid.Row="1"/>
 
-                <Label Text="{Binding TotalTime}" 
-                       HorizontalOptions="Center"
-                       Grid.Column="2" 
-                       Grid.Row="1"/>
-            </Grid>
+                    <Label Text="{Binding TotalTime}" 
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource TextColor}"
+                           Grid.Column="2" 
+                           Grid.Row="1"/>
+                </Grid>
+            </Frame>
 
-            <!-- Sectiunea ingrediente -->
-            <Frame BorderColor="LightGray" CornerRadius="10" Padding="15">
+            <!-- Ingredients Section -->
+            <Frame BorderColor="{StaticResource SecondaryColor}" 
+                   BackgroundColor="White" 
+                   Opacity="0.9"
+                   CornerRadius="10" 
+                   Padding="15"
+                   HasShadow="True">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="Ingredients" FontAttributes="Bold" FontSize="18"/>
+                    <Label Text="Ingredients" 
+                           FontAttributes="Bold" 
+                           FontSize="18"
+                           TextColor="{StaticResource SecondaryColor}"/>
                     <CollectionView ItemsSource="{Binding Ingredients}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Padding="5">
-                                    <Label Text="{Binding .}" FontSize="16"/>
+                                <Grid Padding="8,5">
+                                    <Label Text="{Binding .}" 
+                                           FontSize="16"
+                                           TextColor="{StaticResource TextColor}"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -98,15 +156,25 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Sectiunea metoda -->
-            <Frame BorderColor="LightGray" CornerRadius="10" Padding="15">
+            <!-- Method Section -->
+            <Frame BorderColor="{StaticResource PrimaryColor}" 
+                   BackgroundColor="White" 
+                   Opacity="0.9"
+                   CornerRadius="10" 
+                   Padding="15"
+                   HasShadow="True">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="Method" FontAttributes="Bold" FontSize="18"/>
+                    <Label Text="Method" 
+                           FontAttributes="Bold" 
+                           FontSize="18"
+                           TextColor="{StaticResource PrimaryColor}"/>
                     <CollectionView ItemsSource="{Binding Method}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Padding="5">
-                                    <Label Text="{Binding .}" FontSize="16"/>
+                                <Grid Padding="8,5">
+                                    <Label Text="{Binding .}" 
+                                           FontSize="16"
+                                           TextColor="{StaticResource TextColor}"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -114,21 +182,42 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Categorie si tema -->
-            <Frame BorderColor="LightGray" CornerRadius="10" Padding="15">
+            <!-- Category & Themes Section -->
+            <Frame BorderColor="{StaticResource SecondaryColor}" 
+                   BackgroundColor="White" 
+                   Opacity="0.9"
+                   CornerRadius="10" 
+                   Padding="15"
+                   HasShadow="True"
+                   Margin="0,0,0,20">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="Category" FontAttributes="Bold" FontSize="18"/>
-                    <Label Text="{Binding Category}" FontSize="16"/>
+                    <Label Text="Category" 
+                           FontAttributes="Bold" 
+                           FontSize="18"
+                           TextColor="{StaticResource SecondaryColor}"/>
+                    <Label Text="{Binding Category}" 
+                           FontSize="16"
+                           TextColor="{StaticResource TextColor}"/>
 
-                    <Label Text="Themes" FontAttributes="Bold" FontSize="18" Margin="0,10,0,0"/>
-                    <CollectionView ItemsSource="{Binding Themes}" HeightRequest="40">
+                    <Label Text="Themes" 
+                           FontAttributes="Bold" 
+                           FontSize="18" 
+                           Margin="0,10,0,0"
+                           TextColor="{StaticResource SecondaryColor}"/>
+                    <CollectionView ItemsSource="{Binding Themes}" HeightRequest="45">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame BackgroundColor="#f0f0f0" Padding="10,5" CornerRadius="15">
-                                    <Label Text="{Binding .}" FontSize="14"/>
+                                <Frame BackgroundColor="{StaticResource LightAccentColor}" 
+                                       Padding="12,5" 
+                                       CornerRadius="15"
+                                       HasShadow="False"
+                                       BorderColor="{StaticResource AccentColor}">
+                                    <Label Text="{Binding .}" 
+                                           FontSize="14"
+                                           TextColor="{StaticResource TextColor}"/>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
