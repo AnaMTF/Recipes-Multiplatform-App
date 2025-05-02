@@ -2,64 +2,106 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.Favourites"
-             Title="Favorite Recipes">
+             Title="Favorite Recipes"
+             BackgroundColor="#dbcdb5">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Custom color palette for cooking app -->
+            <Color x:Key="PrimaryColor">#ed6e3a</Color>
+            <!-- Warm Orange -->
+            <Color x:Key="SecondaryColor">#6c9e4f</Color>
+            <!-- Fresh Green -->
+            <Color x:Key="BackgroundColor">#dbcdb5</Color>
+            <!-- Soft Cream -->
+            <Color x:Key="AccentColor">#a4330d</Color>
+            <!-- Deep Terracotta -->
+            <Color x:Key="TextColor">#5e3c2c</Color>
+            <!-- Rich Brown -->
+            <Color x:Key="LightAccentColor">#e9b08e</Color>
+            <!-- Light Peach -->
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*">
         <Label Text="Your Favorite Recipes" 
-               FontSize="Large" 
-               Margin="20,10"
+               FontSize="28" 
+               Margin="20,15"
                FontAttributes="Bold"
+               TextColor="{StaticResource TextColor}"
                Grid.Row="0" />
 
         <CollectionView Grid.Row="1"
+                      x:Name="FavoritesCollection"
                       ItemsSource="{Binding FavoriteRecipes}"
                       SelectionMode="Single"
-                      SelectionChanged="OnRecipeSelected">
+                      SelectionChanged="OnRecipeSelected"
+                      Margin="10,0,10,10">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="10" Padding="10" CornerRadius="10" HasShadow="False">
-                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
-                            <!-- Imaginea retetei -->
-                            <Image Grid.RowSpan="3" 
-                                 Source="{Binding ImageUrl}"
-                                 Aspect="AspectFill"
-                                 HeightRequest="100" 
-                                 WidthRequest="100" />
+                    <Frame Margin="0,8" 
+                           Padding="15" 
+                           CornerRadius="12" 
+                           HasShadow="True"
+                           BorderColor="{StaticResource PrimaryColor}"
+                           BackgroundColor="White">
 
-                            <!-- Numele retetei -->
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnFrameTapped" 
+                                                 CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+                            <!-- Recipe Image -->
+                            <Frame Grid.RowSpan="3"
+                                  CornerRadius="8"
+                                  IsClippedToBounds="True"
+                                  Padding="0"
+                                  BorderColor="{StaticResource TextColor}">
+                                <Image Source="{Binding ImageUrl}"
+                                     Aspect="AspectFill"
+                                     HeightRequest="110" 
+                                     WidthRequest="110" />
+                            </Frame>
+
+                            <!-- Recipe Name -->
                             <Label Grid.Column="1" 
                                   Text="{Binding Name}" 
-                                  FontSize="Medium" 
+                                  FontSize="18" 
                                   FontAttributes="Bold"
-                                  TextColor="#333333"
-                                  Margin="10,0,0,5"/>
+                                  TextColor="{StaticResource TextColor}"
+                                  Margin="15,0,0,5"/>
 
-                            <!-- Descrierea retetei -->
+                            <!-- Recipe Description -->
                             <Label Grid.Row="1" 
                                   Grid.Column="1" 
                                   Text="{Binding Description}" 
                                   MaxLines="2"
                                   LineBreakMode="TailTruncation"
-                                  TextColor="#666666"
-                                  Margin="10,0,0,5"/>
+                                  TextColor="{StaticResource TextColor}"
+                                  Opacity="0.8"
+                                  Margin="15,0,0,5"/>
 
-                            <!-- Autorul -->
+                            <!-- Author -->
                             <Label Grid.Row="2" 
                                   Grid.Column="1" 
                                   Text="{Binding Author, StringFormat='By {0}'}" 
-                                  FontSize="Small"
-                                  TextColor="#999999"
-                                  Margin="10,0,0,0"/>
+                                  FontSize="14"
+                                  TextColor="{StaticResource TextColor}"
+                                  Opacity="0.7"
+                                  Margin="15,0,0,0"/>
 
-                            <!-- Sterge din favorite -->
+                            <!-- Favorite Button -->
                             <Button Grid.Row="2" 
                                    Grid.Column="1" 
                                    HorizontalOptions="End"
                                    Text="♥"
                                    BackgroundColor="Transparent"
-                                   TextColor="Red"
-                                   FontSize="24"
+                                   TextColor="{StaticResource AccentColor}"
+                                   FontSize="28"
+                                   Margin="0,-10,0,0"
+                                   Padding="10"
                                    Clicked="OnRemoveFavoriteClicked"
                                    CommandParameter="{Binding Id}"/>
                         </Grid>
@@ -69,18 +111,29 @@
 
             <!-- Empty state when no favorites -->
             <CollectionView.EmptyView>
-                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <Label Text="No favorite recipes yet" 
-                          FontSize="Large" 
-                          HorizontalOptions="Center" />
-                    <Label Text="Tap the heart icon on any recipe to add it to your favorites" 
-                          FontSize="Medium"
-                          TextColor="#666666"
-                          HorizontalOptions="Center"
-                          MaxLines="2"
-                          HorizontalTextAlignment="Center"
-                          Margin="40,10" />
-                </VerticalStackLayout>
+                <Frame BackgroundColor="White" 
+                      Opacity="0.9"
+                      CornerRadius="15"
+                      Margin="20,10"
+                      Padding="20"
+                      BorderColor="{StaticResource PrimaryColor}"
+                      HasShadow="True">
+                    <VerticalStackLayout VerticalOptions="Center" 
+                                        HorizontalOptions="Center" 
+                                        Spacing="15">
+                        <Label Text="No favorite recipes yet" 
+                              FontSize="24" 
+                              TextColor="{StaticResource PrimaryColor}"
+                              FontAttributes="Bold"
+                              HorizontalOptions="Center" />
+                        <Label Text="Tap the heart icon on any recipe to add it to your favorites" 
+                              FontSize="16"
+                              TextColor="{StaticResource TextColor}"
+                              HorizontalOptions="Center"
+                              MaxLines="2"
+                              HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Frame>
             </CollectionView.EmptyView>
         </CollectionView>
     </Grid>
