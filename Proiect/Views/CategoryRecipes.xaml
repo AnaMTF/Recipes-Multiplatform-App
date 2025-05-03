@@ -3,43 +3,115 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.CategoryRecipes"
              Title="{Binding CategoryName}">
-    <CollectionView ItemsSource="{Binding Recipes}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Light Theme -->
+            <Color x:Key="PageBackgroundLight">#dbcdb5</Color>
+            <Color x:Key="PrimaryColorLight">#ed6e3a</Color>
+            <Color x:Key="SecondaryColorLight">#6c9e4f</Color>
+            <Color x:Key="TextColorLight">#5e3c2c</Color>
+            <Color x:Key="AccentColorLight">#a4330d</Color>
+            <Color x:Key="LightAccentColorLight">#e9b08e</Color>
+            <Color x:Key="CardBackgroundLight">White</Color>
+
+            <!-- Dark Theme -->
+            <Color x:Key="PageBackgroundDark">#2d2d2d</Color>
+            <Color x:Key="PrimaryColorDark">#ff8c5a</Color>
+            <Color x:Key="SecondaryColorDark">#8bc573</Color>
+            <Color x:Key="TextColorDark">#e6dfd7</Color>
+            <Color x:Key="AccentColorDark">#ff6347</Color>
+            <Color x:Key="LightAccentColorDark">#744838</Color>
+            <Color x:Key="CardBackgroundDark">#3d3d3d</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="{StaticResource PageBackgroundLight}"
+                         Dark="{StaticResource PageBackgroundDark}" />
+    </ContentPage.BackgroundColor>
+
+    <CollectionView ItemsSource="{Binding Recipes}"
+                    Margin="10"
+                    SelectionMode="Single"
+                    SelectionChanged="OnRecipeTapped">
+
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <Frame Margin="10" Padding="10" CornerRadius="10" HasShadow="False">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnRecipeTapped" CommandParameter="{Binding .}" />
-                    </Frame.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
-                        <Image Grid.RowSpan="3" 
-                               Source="{Binding ImageUrl}" 
-                               HeightRequest="100" 
-                               WidthRequest="100" 
-                               Aspect="AspectFill" />
+                <Border Margin="0,8"
+                        Padding="15"
+                        Stroke="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}"
+                        StrokeThickness="2"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
 
-                        <Label Grid.Column="1" 
-                               Text="{Binding Name}" 
+                    <Grid ColumnDefinitions="Auto,*"
+                          RowDefinitions="Auto,Auto,Auto">
+                        <!-- Image -->
+                        <Border Grid.RowSpan="3"
+                                Stroke="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}"
+                                StrokeThickness="1"
+                                BackgroundColor="Transparent"
+                                WidthRequest="110"
+                                HeightRequest="110"
+                                Padding="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <Image Source="{Binding ImageUrl}"
+                                   Aspect="AspectFill"
+                                   WidthRequest="110"
+                                   HeightRequest="110" />
+                        </Border>
+
+                        <!-- Recipe Name -->
+                        <Label Grid.Column="1"
+                               Text="{Binding Name}"
+                               FontSize="18"
                                FontAttributes="Bold"
-                               FontSize="Medium"
-                               TextColor="#333"
-                               Margin="10,0,0,5"/>
+                               TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}"
+                               Margin="15,0,0,5"/>
 
-                        <Label Grid.Row="1" Grid.Column="1" 
-                               Text="{Binding Description}" 
-                               LineBreakMode="TailTruncation"
+                        <!-- Description -->
+                        <Label Grid.Row="1" Grid.Column="1"
+                               Text="{Binding Description}"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}"
+                               Opacity="0.8"
                                MaxLines="2"
-                               FontSize="Small"
-                               TextColor="#666"
-                               Margin="10,0,0,5"/>
+                               LineBreakMode="TailTruncation"
+                               Margin="15,0,0,5"/>
 
-                        <Label Grid.Row="2" Grid.Column="1" 
-                               Text="{Binding Author, StringFormat='By {0}'}" 
-                               FontSize="Small"
-                               TextColor="#999"
-                               Margin="10,0,0,0"/>
+                        <!-- Author -->
+                        <Label Grid.Row="2" Grid.Column="1"
+                               Text="{Binding Author, StringFormat='By {0}'}"
+                               FontSize="13"
+                               TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}"
+                               Opacity="0.7"
+                               Margin="15,0,0,0"/>
                     </Grid>
-                </Frame>
+                </Border>
             </DataTemplate>
         </CollectionView.ItemTemplate>
+
+        <!-- Empty view -->
+        <CollectionView.EmptyView>
+            <VerticalStackLayout Padding="20"
+                                 VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 Spacing="15">
+                <Label Text="No recipes in this category."
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}"
+                       HorizontalOptions="Center" />
+                <Label Text="Try adding one!"
+                       FontSize="14"
+                       TextColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColorDark}}"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </CollectionView.EmptyView>
     </CollectionView>
 </ContentPage>

@@ -1,26 +1,55 @@
-﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Light Theme Colors -->
+            <Color x:Key="PageBackgroundLight">#dbcdb5</Color>
+            <Color x:Key="PrimaryColorLight">#ed6e3a</Color>
+            <Color x:Key="SecondaryColorLight">#6c9e4f</Color>
+            <Color x:Key="TextColorLight">#5e3c2c</Color>
+            <Color x:Key="AccentColorLight">#a4330d</Color>
+            <Color x:Key="LightAccentColorLight">#e9b08e</Color>
+            <Color x:Key="CardBackgroundLight">White</Color>
+
+            <!-- Dark Theme Colors -->
+            <Color x:Key="PageBackgroundDark">#2d2d2d</Color>
+            <Color x:Key="PrimaryColorDark">#ff8c5a</Color>
+            <Color x:Key="SecondaryColorDark">#8bc573</Color>
+            <Color x:Key="TextColorDark">#e6dfd7</Color>
+            <Color x:Key="AccentColorDark">#ff6347</Color>
+            <Color x:Key="LightAccentColorDark">#744838</Color>
+            <Color x:Key="CardBackgroundDark">#3d3d3d</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="{StaticResource PageBackgroundLight}" 
+                         Dark="{StaticResource PageBackgroundDark}" />
+    </ContentPage.BackgroundColor>
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
 
-            <!-- Header titlu -->
+            <!-- Header -->
             <Label x:Name="HeaderLabel"
                    Text="Welcome to Culinary Creations!" 
-                   FontSize="{DynamicResource FontSizeBase}" 
-                   FontFamily="{DynamicResource FontFamilyBase}"
+                   FontSize="28" 
+                   FontAttributes="Bold"
+                   FontFamily="Arial"
                    HorizontalOptions="Center" 
                    Opacity="0"
-                   FontAttributes="Bold"
-                   TextColor="#2EC35F" />
+                   TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
 
-            <!-- Search Bar-->
+            <!-- Search Bar -->
             <SearchBar x:Name="RecipeSearchBar" 
                        Placeholder="Search Recipe" 
                        TextChanged="RecipeSearchBar_TextChanged" 
-                       FontFamily="{DynamicResource FontFamilyBase}" />
+                       FontFamily="Arial" />
 
-            <!-- Secțiune pentru rezultatele de la search-->
+            <!-- Search Results -->
             <CollectionView x:Name="SearchResultsCollectionView"
                             IsVisible="False"
                             ItemsSource="{Binding FilteredRecipes}"
@@ -29,31 +58,42 @@
                             SelectionChanged="SearchResultsCollectionView_SelectionChanged">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border Stroke="Gray" StrokeThickness="1" Margin="5" Padding="5">
+                        <Border Stroke="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}"
+                                StrokeThickness="1"
+                                Margin="5"
+                                Padding="10"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}">
                             <Label Text="{Binding Name}" 
-                                   FontSize="{DynamicResource FontSizeBase}" 
-                                   FontFamily="{DynamicResource FontFamilyBase}" />
+                                   FontSize="18" 
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <!-- Secțiune: Top Hottest Recipes -->
-            <Border Stroke="Red" StrokeThickness="2" BackgroundColor="LightCoral" Padding="10">
+            <!-- Newest Recipes -->
+            <Border Stroke="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}" 
+                    StrokeThickness="2"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource LightAccentColorLight}, Dark={StaticResource LightAccentColorDark}}"
+                    Padding="10">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10" />
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Newest Recipes" 
-                           FontSize="{DynamicResource FontSizeBase}" 
-                           FontFamily="{DynamicResource FontFamilyBase}" 
-                           FontAttributes="Bold" 
-                           HorizontalOptions="Center" />
-                    
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
+
                     <CarouselView x:Name="RecipeCarousel" HeightRequest="200" ItemsSource="{Binding TopRecipes}">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
-                                <Border Stroke="Pink" StrokeThickness="1" Margin="10" BackgroundColor="Transparent">
+                                <Border Stroke="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColorDark}}"
+                                        StrokeThickness="1"
+                                        Margin="10"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
@@ -64,9 +104,7 @@
                                                HorizontalOptions="Center"
                                                BackgroundColor="#80000000"
                                                TextColor="White"
-                                               Padding="10"
-                                               FontFamily="{DynamicResource FontFamilyBase}"
-                                               FontSize="{DynamicResource FontSizeBase}" />
+                                               Padding="10" />
                                     </Grid>
                                 </Border>
                             </DataTemplate>
@@ -75,19 +113,23 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Secțiune: Categorii -->
-            <Border Stroke="HotPink" StrokeThickness="2" BackgroundColor="MistyRose" Padding="10">
+            <!-- Categories -->
+            <Border Stroke="{AppThemeBinding Light={StaticResource SecondaryColorLight}, Dark={StaticResource SecondaryColorDark}}" 
+                    StrokeThickness="2"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource LightAccentColorLight}, Dark={StaticResource LightAccentColorDark}}"
+                    Padding="10">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10" />
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Categories" 
-                           FontSize="{DynamicResource FontSizeBase}" 
-                           FontFamily="{DynamicResource FontFamilyBase}"
+                           FontSize="20"
                            FontAttributes="Bold"
-                           HorizontalOptions="Center" />
-                    
-                    <CollectionView ItemsSource="{Binding Categories}" HeightRequest="120"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
+
+                    <CollectionView ItemsSource="{Binding Categories}" 
+                                    HeightRequest="120"
                                     SelectionMode="Single"
                                     SelectionChanged="OnCategorySelected">
                         <CollectionView.ItemsLayout>
@@ -95,27 +137,24 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Border Stroke="Gray" StrokeThickness="1" BackgroundColor="#FFB6C1" Padding="10" Margin="5"
-                                        WidthRequest="120" HeightRequest="100">
+                                <Border Stroke="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}"
+                                        StrokeThickness="1"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                                        WidthRequest="120"
+                                        HeightRequest="100"
+                                        Margin="5"
+                                        Padding="10">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
                                     <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-
                                         <Label Text="{Binding Name}" 
-                                               FontSize="{DynamicResource FontSizeBase}" 
-                                               FontFamily="{DynamicResource FontFamilyBase}" 
                                                FontAttributes="Bold"
-                                               TextColor="Black"
-                                               Grid.Row="1"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"
                                                HorizontalOptions="Center"
                                                VerticalOptions="Center"
-                                               HorizontalTextAlignment="Center"
-                                               VerticalTextAlignment="Center"/>
+                                               TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                                     </Grid>
                                 </Border>
                             </DataTemplate>
@@ -124,36 +163,43 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Secțiune: Recomandate pentru tine -->
-            <Border Stroke="Orange" StrokeThickness="2" BackgroundColor="LightYellow" Padding="10">
+            <!-- Recommended Recipes -->
+            <Border Stroke="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColorDark}}"  
+                    StrokeThickness="2"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource LightAccentColorLight}, Dark={StaticResource LightAccentColorDark}}" 
+                    Padding="10">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10" />
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="10">
                     <Label Text="We think you might like these recipes :)" 
-                           FontSize="{DynamicResource FontSizeBase}" 
-                           FontFamily="{DynamicResource FontFamilyBase}" 
-                           FontAttributes="Bold" 
-                           HorizontalOptions="Center"/>
-                    
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
+
                     <CollectionView x:Name="RecommendedRecipesCollectionView" 
-                        ItemsSource="{Binding RecommendedRecipes}" 
-                        ItemsLayout="HorizontalList" 
-                        HeightRequest="180" 
-                        SelectionMode="Single"
-                        SelectionChanged="RecommendedRecipes_SelectionChanged">
+                                    ItemsSource="{Binding RecommendedRecipes}" 
+                                    ItemsLayout="HorizontalList" 
+                                    HeightRequest="180" 
+                                    SelectionMode="Single"
+                                    SelectionChanged="RecommendedRecipes_SelectionChanged">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Border Stroke="Pink" StrokeThickness="2" Padding="10" Margin="5">
+                                <Border Stroke="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}"
+                                        StrokeThickness="2"
+                                        Margin="5"
+                                        Padding="10"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
                                     <VerticalStackLayout>
                                         <Image Source="{Binding ImageUrl}" HeightRequest="100" WidthRequest="200" Aspect="AspectFill"/>
                                         <Label Text="{Binding Name}" 
-                                               FontSize="{DynamicResource FontSizeBase}" 
-                                               FontFamily="{DynamicResource FontFamilyBase}" 
-                                               HorizontalOptions="Center"/>
+                                               FontSize="16" 
+                                               HorizontalOptions="Center"
+                                               TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                                     </VerticalStackLayout>
                                 </Border>
                             </DataTemplate>

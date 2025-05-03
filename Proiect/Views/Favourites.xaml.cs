@@ -15,25 +15,6 @@ namespace Proiect.Views
             recipeDao = new RecipeDao();
             FavoriteRecipes = new ObservableCollection<Recipe>();
             BindingContext = this;
-
-            // For testing only - uncomment if you need to set test favorites
-            // TestAddFavorites();
-        }
-
-        // For testing only - can be used to mark recipes as favorites for testing
-        private void TestAddFavorites()
-        {
-            var allRecipes = recipeDao.GetAllRecipes();
-            var favorites = recipeDao.GetFavoriteRecipes();
-
-            // If no favorites exist yet, mark the first 2 recipes as favorites
-            if (favorites.Count == 0 && allRecipes.Count > 0)
-            {
-                for (int i = 0; i < Math.Min(2, allRecipes.Count); i++)
-                {
-                    recipeDao.ToggleFavorite(allRecipes[i].Id);
-                }
-            }
         }
 
         protected override void OnAppearing()

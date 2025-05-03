@@ -3,125 +3,137 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.AddRecipe"
              Title="AddRecipe">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Light Theme -->
+            <Color x:Key="PageBackgroundLight">#dbcdb5</Color>
+            <Color x:Key="PrimaryColorLight">#ed6e3a</Color>
+            <Color x:Key="SecondaryColorLight">#6c9e4f</Color>
+            <Color x:Key="TextColorLight">#5e3c2c</Color>
+            <Color x:Key="AccentColorLight">#a4330d</Color>
+            <Color x:Key="CardBackgroundLight">White</Color>
+            <Color x:Key="LightAccentColorLight">#e9b08e</Color>
+            <Color x:Key="InputBackgroundLight">#fff7f0</Color>
+
+            <!-- Dark Theme -->
+            <Color x:Key="PageBackgroundDark">#2d2d2d</Color>
+            <Color x:Key="PrimaryColorDark">#ff8c5a</Color>
+            <Color x:Key="SecondaryColorDark">#8bc573</Color>
+            <Color x:Key="TextColorDark">#444444</Color>
+            <Color x:Key="AccentColorDark">#ff6347</Color>
+            <Color x:Key="CardBackgroundDark">#3d3d3d</Color>
+            <Color x:Key="InputBackgroundDark">#fff7f0</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="{StaticResource PageBackgroundLight}" Dark="{StaticResource PageBackgroundDark}" />
+    </ContentPage.BackgroundColor>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ProgressBar x:Name="FormProgressBar"
-                 Grid.Row="0"
-                 HeightRequest="20"
-                 Margin="10" />
+        <ProgressBar x:Name="FormProgressBar" Grid.Row="0" HeightRequest="20" Margin="10"
+                     ProgressColor="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}" />
 
         <ScrollView Grid.Row="1">
-            <StackLayout Spacing="10" Padding="20" Margin="30">
-                <Label Text="Add a new recipe" FontSize="Large" HorizontalOptions="Center" />
+            <StackLayout Spacing="12" Padding="20" Margin="20,10">
+
+                <Label Text="Add a new recipe" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
+
                 <!-- Recipe Name -->
-                <Border Stroke="Violet"
-                    StrokeThickness="2"
-                Padding="5"
-                    StrokeShape="RoundRectangle 40,0,0,40">
-                    <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="Cornsilk" WidthRequest="40"/>
-                        <Label Text="Recipe Name:" FontSize="Medium"/>
-                    </StackLayout>
+                <Border Stroke="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}"
+                        BackgroundColor="{StaticResource LightAccentColorLight}" StrokeThickness="2"
+                        Padding="5" StrokeShape="RoundRectangle 40,0,0,40">
+                    <Label Text="Recipe Name:" FontSize="Medium"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                 </Border>
-                <Entry x:Name="RecipeName" Placeholder="Enter recipe name" 
-               TextChanged="OnEntryTextChanged"/>
+                <Entry x:Name="RecipeName" Placeholder="Enter recipe name" TextChanged="OnEntryTextChanged"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
+
                 <!-- Description -->
-                <Border Stroke="Violet"
-                    StrokeThickness="2"
-                Padding="5"
-                    StrokeShape="RoundRectangle 40,0,0,40">
-                    <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="AliceBlue" WidthRequest="40"/>
-                        <Label Text="Description:" FontSize="Medium"/>
-                    </StackLayout>
+                <Border Stroke="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}"
+                        BackgroundColor="{StaticResource LightAccentColorLight}" StrokeThickness="2"
+                        Padding="5" StrokeShape="RoundRectangle 40,0,0,40">
+                    <Label Text="Description:" FontSize="Medium"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                 </Border>
-                <Editor x:Name="Description" HeightRequest="100"
-                        Placeholder="Enter description"
-                        TextChanged="OnEntryTextChanged"/>
-                <!-- Recipe Photo Section -->
-                <Border Stroke="Violet" StrokeThickness="2" Padding="5"
-                        StrokeShape="RoundRectangle 40,0,0,40">
-                    <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="Lavender" WidthRequest="40"/>
-                        <Label Text="Recipe Photo:" FontSize="Medium"/>
-                    </StackLayout>
+                <Editor x:Name="Description" HeightRequest="100" Placeholder="Enter description" TextChanged="OnEntryTextChanged"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
+
+                <!-- Photo -->
+                <Border Stroke="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}"
+                        BackgroundColor="{StaticResource LightAccentColorLight}" StrokeThickness="2"
+                        Padding="5" StrokeShape="RoundRectangle 40,0,0,40">
+                    <Label Text="Recipe Photo:" FontSize="Medium"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                 </Border>
-                <!-- Selected Image -->
                 <Image x:Name="RecipeImage" HeightRequest="200" Aspect="AspectFill" />
-                <Button Text="Add Photo" FontAttributes="Bold" Clicked="OnPickPhotoClicked" BackgroundColor="LightPink" />
+                <Button Text="Add Photo" Clicked="OnPickPhotoClicked" FontAttributes="Bold"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColorDark}}"
+                        TextColor="White" />
+
                 <!-- Category -->
-                <Border Stroke="Violet"
-                        StrokeThickness="2"
-                        Padding="5"
-                        StrokeShape="RoundRectangle 40,0,0,40">
-                    <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="LightGreen" WidthRequest="40"/>
-                        <Label Text="Category:" FontSize="Medium" />
-                    </StackLayout>
+                <Border Stroke="{AppThemeBinding Light={StaticResource SecondaryColorLight}, Dark={StaticResource SecondaryColorDark}}"
+                        BackgroundColor="{StaticResource LightAccentColorLight}" StrokeThickness="2"
+                        Padding="5" StrokeShape="RoundRectangle 40,0,0,40">
+                    <Label Text="Category:" FontSize="Medium"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                 </Border>
-
-                <!-- Picker pentru categorii -->
-                <Picker x:Name="CategoryPicker"
-                        Title="Select a category"
+                <Picker x:Name="CategoryPicker" Title="Select a category"
                         ItemsSource="{Binding AvailableCategories}"
-                        SelectedIndexChanged="CategoryPicker_SelectedIndexChanged"/>
-                <!-- Entry pentru categorie personalizata -->
-                <Entry x:Name="CustomCategoryEntry" 
-                       Placeholder="Enter the desired category"
-                       IsVisible="False"/>
+                        SelectedIndexChanged="CategoryPicker_SelectedIndexChanged"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
+                <Entry x:Name="CustomCategoryEntry" Placeholder="Enter the desired category" IsVisible="False"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
 
-                <!-- Secțiunea pentru themes -->
-                <Border Stroke="Violet"
-                        StrokeThickness="2"
-                        Padding="5"
-                        StrokeShape="RoundRectangle 40,0,0,40">
-                    <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="Cornsilk" WidthRequest="40"/>
-                        <Label Text="Themes:" FontSize="Medium" />
-                    </StackLayout>
+                <!-- Themes -->
+                <Border Stroke="{AppThemeBinding Light={StaticResource SecondaryColorLight}, Dark={StaticResource SecondaryColorDark}}"
+                        BackgroundColor="{StaticResource LightAccentColorLight}" StrokeThickness="2"
+                        Padding="5" StrokeShape="RoundRectangle 40,0,0,40">
+                    <Label Text="Themes:" FontSize="Medium"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                 </Border>
-
-                <!-- Picker pentru themes -->
-                <Picker x:Name="ThemePicker"
-                        Title="Select one or more themes"
+                <Picker x:Name="ThemePicker" Title="Select theme"
                         ItemsSource="{Binding AvailableThemes}"
-                        SelectedIndexChanged="ThemePicker_SelectedIndexChanged"/>
-                <!-- Entry pentru temă personalizată -->
-                <Entry x:Name="CustomThemeEntry" 
-                       Placeholder="Enter the desired theme"
-                       IsVisible="False"/>
-                <!-- Buton pentru adăugarea temei selectate -->
-                <Button Text="Add Theme" FontAttributes="Bold" Clicked="AddTheme_Clicked" BackgroundColor="LightPink"/>
-                <!-- Listă pentru afișarea temelor selectate -->
+                        SelectedIndexChanged="ThemePicker_SelectedIndexChanged"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
+                <Entry x:Name="CustomThemeEntry" Placeholder="Enter the desired theme" IsVisible="False"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
+                <Button Text="Add Theme" Clicked="AddTheme_Clicked" FontAttributes="Bold"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColorDark}}"
+                        TextColor="White" />
+
                 <CollectionView x:Name="ThemesList" ItemsSource="{Binding SelectedThemes}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border Stroke="Gray" StrokeThickness="1" Margin="5" Padding="5">
-                                <Label Text="{Binding .}" FontSize="Small"/>
+                            <Border Stroke="Gray" StrokeThickness="1" Margin="5" Padding="5" 
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource AccentColorDark}}">
+                                <Label Text="{Binding .}" FontSize="Small" />
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+
                 <!-- Ingredients -->
-                <Border Stroke="Violet"
-                        StrokeThickness="2"
-                        Padding="5"
-                        StrokeShape="RoundRectangle 40,0,0,40">
-                    <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="AliceBlue" WidthRequest="40"/>
-                        <Label Text="Ingredients:"  FontSize="Medium"/>
-                    </StackLayout>
+                <Border Stroke="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}"
+                        BackgroundColor="{StaticResource LightAccentColorLight}" StrokeThickness="2"
+                        Padding="5" StrokeShape="RoundRectangle 40,0,0,40">
+                    <Label Text="Ingredients:" FontSize="Medium"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                 </Border>
-                <Picker x:Name="IngredientPicker" 
-                        Title="Select an ingredient" 
-                        SelectedIndexChanged="IngredientPicker_SelectedIndexChanged"/>
-                <Button Text="Add Ingredient" FontAttributes="Bold" Clicked="AddIngredient_Clicked" BackgroundColor="LightPink"/>
-                <CollectionView x:Name="IngredientsList" 
-                                ItemsSource="{Binding SelectedIngredients}">
+                <Picker x:Name="IngredientPicker" Title="Select an ingredient"
+                        SelectedIndexChanged="IngredientPicker_SelectedIndexChanged"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
+                <Button Text="Add Ingredient" Clicked="AddIngredient_Clicked" FontAttributes="Bold"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentColorLight}, Dark={StaticResource AccentColorDark}}"
+                        TextColor="White" />
+                <CollectionView x:Name="IngredientsList" ItemsSource="{Binding SelectedIngredients}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal" Spacing="10">
@@ -131,60 +143,50 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+
                 <!-- Steps -->
-                <Border Stroke="Violet"
-                        StrokeThickness="2"
-                        Padding="5"
-                        StrokeShape="RoundRectangle 40,0,0,40">
-                    <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="Lavender" WidthRequest="40"/>
-                        <Label Text="Steps:"  FontSize="Medium"/>
-                    </StackLayout>
+                <Border Stroke="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}"
+                        BackgroundColor="{StaticResource LightAccentColorLight}" StrokeThickness="2"
+                        Padding="5" StrokeShape="RoundRectangle 40,0,0,40">
+                    <Label Text="Steps:" FontSize="Medium"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                 </Border>
-                <Editor x:Name="MethodEditor" Placeholder="Enter steps separated by ';'"
-                TextChanged="OnEntryTextChanged" HeightRequest="100"/>
-                <!-- Prepping Time -->
-                <Border Stroke="Violet"
-                        StrokeThickness="2"
-                        Padding="5"
-                        StrokeShape="RoundRectangle 40,0,0,40">
-                    <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="LightGreen" WidthRequest="40"/>
-                        <Label Text="Prepping Time (minutes):"  FontSize="Medium"/>
-                    </StackLayout>
-                </Border>
+                <Editor x:Name="MethodEditor" Placeholder="Enter steps separated by ';'" HeightRequest="100"
+                        TextChanged="OnEntryTextChanged"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
 
-                <Entry x:Name="PreppingTime" Placeholder="e.g., 30" 
-                       Keyboard="Numeric"
-                       TextChanged="OnTimeTextChanged" />
-                <!-- Cooking Time -->
-                <Border Stroke="Violet"
-                        StrokeThickness="2"
-                        Padding="5"
-                        StrokeShape="RoundRectangle 40,0,0,40">
-                    <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="Cornsilk" WidthRequest="40"/>
-                        <Label Text="Cooking Time (minutes):" FontSize="Medium" />
-                    </StackLayout>
+                <!-- Times -->
+                <Border Stroke="{AppThemeBinding Light={StaticResource SecondaryColorLight}, Dark={StaticResource SecondaryColorDark}}"
+                        BackgroundColor="{StaticResource LightAccentColorLight}" StrokeThickness="2"
+                        Padding="5" StrokeShape="RoundRectangle 40,0,0,40">
+                    <Label Text="Prepping Time (minutes):" FontSize="Medium"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                 </Border>
+                <Entry x:Name="PreppingTime" Placeholder="e.g., 30" Keyboard="Numeric" TextChanged="OnTimeTextChanged"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
 
-                <Entry x:Name="CookingTime" Placeholder="e.g., 60" 
-                       Keyboard="Numeric"
-                       TextChanged="OnTimeTextChanged" />
-                <!-- Total Time -->
-                <Border Stroke="Violet"
-                        StrokeThickness="2"
-                        Padding="5"
-                        StrokeShape="RoundRectangle 40,0,0,40">
-                    <StackLayout Orientation="Horizontal" Spacing="15">
-                        <BoxView Color="AliceBlue" WidthRequest="40"/>
-                        <Label Text="Total Time:"  FontSize="Medium"/>
-                    </StackLayout>
+                <Border Stroke="{AppThemeBinding Light={StaticResource SecondaryColorLight}, Dark={StaticResource SecondaryColorDark}}"
+                        BackgroundColor="{StaticResource LightAccentColorLight}" StrokeThickness="2"
+                        Padding="5" StrokeShape="RoundRectangle 40,0,0,40">
+                    <Label Text="Cooking Time (minutes):" FontSize="Medium"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                 </Border>
-                <Label x:Name="TotalTimeLabel" 
-                       FontAttributes="Bold" 
-                       Text="0 minutes" />
-                <Button Text="Save" FontAttributes="Bold" Clicked="OnSaveClicked" BackgroundColor="LightPink"/>
+                <Entry x:Name="CookingTime" Placeholder="e.g., 60" Keyboard="Numeric" TextChanged="OnTimeTextChanged"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
+
+                <Border Stroke="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}"
+                        BackgroundColor="{StaticResource LightAccentColorLight}" StrokeThickness="2"
+                        Padding="5" StrokeShape="RoundRectangle 40,0,0,40">
+                    <Label Text="Total Time:" FontSize="Medium"
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
+                </Border>
+                <Label x:Name="TotalTimeLabel" FontAttributes="Bold" Text="0 minutes"
+                       TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
+
+                <!-- Save -->
+                <Button Text="Save" Clicked="OnSaveClicked" FontAttributes="Bold"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}"
+                        TextColor="White" />
             </StackLayout>
         </ScrollView>
     </Grid>

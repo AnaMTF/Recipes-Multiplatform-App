@@ -4,51 +4,81 @@
              x:Class="Proiect.Views.Settings"
              Title="Settings">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Light Theme -->
+            <Color x:Key="PageBackgroundLight">#dbcdb5</Color>
+            <Color x:Key="PrimaryColorLight">#ed6e3a</Color>
+            <Color x:Key="SecondaryColorLight">#6c9e4f</Color>
+            <Color x:Key="TextColorLight">#5e3c2c</Color>
+            <Color x:Key="AccentColorLight">#a4330d</Color>
+            <Color x:Key="CardBackgroundLight">White</Color>
+            <Color x:Key="LightAccentColorLight">#e9b08e</Color>
+            <Color x:Key="InputBackgroundLight">#fff7f0</Color>
+
+            <!-- Dark Theme -->
+            <Color x:Key="PageBackgroundDark">#2d2d2d</Color>
+            <Color x:Key="PrimaryColorDark">#ff8c5a</Color>
+            <Color x:Key="SecondaryColorDark">#8bc573</Color>
+            <Color x:Key="TextColorDark">#e6dfd7</Color>
+            <Color x:Key="AccentColorDark">#ff6347</Color>
+            <Color x:Key="CardBackgroundDark">#3d3d3d</Color>
+            <Color x:Key="InputBackgroundDark">#fff7f0</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="{StaticResource PageBackgroundLight}" Dark="{StaticResource PageBackgroundDark}" />
+    </ContentPage.BackgroundColor>
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
 
             <!-- Titlu -->
             <Label 
                 Text="App Settings"
-                FontSize="30"
+                FontSize="28"
                 FontAttributes="Bold"
-                TextColor="{DynamicResource TextColorPrimary}"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
 
             <!-- Setare temă -->
-            <Frame BackgroundColor="{DynamicResource FrameBackground}"
-                   BorderColor="{DynamicResource AccentColor}"
+            <Frame BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                   BorderColor="{AppThemeBinding Light={StaticResource SecondaryColorLight}, Dark={StaticResource SecondaryColorDark}}"
                    CornerRadius="15"
-                   Padding="15"
+                   Padding="20"
                    HasShadow="True">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Theme"
-                           FontSize="18"
+                           FontSize="20"
                            FontAttributes="Bold"
-                           TextColor="{DynamicResource TextColorSecondary}" />
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                     <Button x:Name="ThemeToggleButton"
                             Text="Switch to Dark Theme"
                             BackgroundColor="#4CAF50"
                             TextColor="White"
-                            CornerRadius="8"
+                            FontAttributes="Bold"
+                            CornerRadius="10"
+                            Padding="10"
                             Clicked="OnThemeToggleClicked" />
                 </VerticalStackLayout>
             </Frame>
 
             <!-- Setare mărime font -->
-            <Frame BackgroundColor="{DynamicResource FrameBackground}"
-                   BorderColor="{DynamicResource AccentColor}"
+            <Frame BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                   BorderColor="{AppThemeBinding Light={StaticResource PrimaryColorLight}, Dark={StaticResource PrimaryColorDark}}"
                    CornerRadius="15"
-                   Padding="15"
+                   Padding="20"
                    HasShadow="True">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Font Size"
-                           FontSize="18"
+                           FontSize="20"
                            FontAttributes="Bold"
-                           TextColor="{DynamicResource TextColorSecondary}" />
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                     <Picker x:Name="FontSizePicker"
                             Title="Select Font Size"
-                            TextColor="{DynamicResource TextColorPrimary}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource CardBackgroundDark}}"
                             SelectedIndexChanged="OnFontSizeChanged">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
@@ -60,9 +90,9 @@
                     </Picker>
                     <Label Text="Preview Text"
                            FontSize="{DynamicResource FontSizeBase}"
-                           TextColor="{DynamicResource TextColorPrimary}"
+                           FontAttributes="Italic"
                            HorizontalOptions="Center"
-                           FontAttributes="Italic" />
+                           TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
                 </VerticalStackLayout>
             </Frame>
 

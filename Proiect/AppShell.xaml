@@ -6,7 +6,8 @@
 	xmlns:local="clr-namespace:Proiect"
 	xmlns:views="clr-namespace:Proiect.Views"
 	Shell.FlyoutBehavior="Flyout"
-	Title="Proiect">
+    Shell.FlyoutBackdrop="{AppThemeBinding Light='#dbcdb5', Dark='#1e1e1e'}"
+	Title="Proiect PDM">
 
 	<ShellContent
 		Title="Home"
@@ -32,8 +33,4 @@
 		Title="About this App"
 		ContentTemplate="{DataTemplate views:AboutApp}"
 		Route="AboutApp" />
-    <ShellContent
-		Title="Recipe Details"
-		ContentTemplate="{DataTemplate views:Details}"
-		Route="Details" />
 </Shell>

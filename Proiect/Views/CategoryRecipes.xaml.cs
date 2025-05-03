@@ -29,13 +29,13 @@ namespace Proiect.Views
             BindingContext = this;
         }
 
-        void OnRecipeTapped(object sender, TappedEventArgs e)
+        void OnRecipeTapped(object sender, SelectionChangedEventArgs e)
         {
-            if (e.Parameter is Recipe selectedRecipe)
+            if (e.CurrentSelection.FirstOrDefault() is Recipe selectedRecipe)
             {
                 Navigation.PushAsync(new Details(selectedRecipe));
+                ((CollectionView)sender).SelectedItem = null; // deselectează după navigare
             }
         }
-
     }
 }

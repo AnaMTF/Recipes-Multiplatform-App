@@ -2,39 +2,74 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proiect.Views.AboutApp"
-             Title="About This App"
-             BackgroundColor="#F9F9F9">
+             Title="About This App">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Light Theme -->
+            <Color x:Key="PageBackgroundLight">#dbcdb5</Color>
+            <Color x:Key="PrimaryColorLight">#ed6e3a</Color>
+            <Color x:Key="SecondaryColorLight">#6c9e4f</Color>
+            <Color x:Key="TextColorLight">#5e3c2c</Color>
+            <Color x:Key="AccentColorLight">#a4330d</Color>
+            <Color x:Key="LightAccentColorLight">#e9b08e</Color>
+            <Color x:Key="CardBackgroundLight">White</Color>
+
+            <!-- Dark Theme -->
+            <Color x:Key="PageBackgroundDark">#2d2d2d</Color>
+            <Color x:Key="PrimaryColorDark">#ff8c5a</Color>
+            <Color x:Key="SecondaryColorDark">#8bc573</Color>
+            <Color x:Key="TextColorDark">#e6dfd7</Color>
+            <Color x:Key="AccentColorDark">#ff6347</Color>
+            <Color x:Key="LightAccentColorDark">#744838</Color>
+            <Color x:Key="CardBackgroundDark">#3d3d3d</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="{StaticResource PageBackgroundLight}"
+                         Dark="{StaticResource PageBackgroundDark}" />
+    </ContentPage.BackgroundColor>
 
     <ScrollView>
-        <VerticalStackLayout Padding="25" Spacing="20" VerticalOptions="Center">
+        <VerticalStackLayout Padding="25"
+                             Spacing="20"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center">
 
             <Image Source="logo.png"
                    HeightRequest="150"
-                   HorizontalOptions="Center"
+                   WidthRequest="150"
+                   Aspect="AspectFit"
                    Margin="0,20,0,10"/>
-
 
             <Label Text="Culinary Creations"
                    FontSize="28"
                    FontAttributes="Bold"
-                   TextColor="#2E7D32"
+                   TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}"
                    HorizontalOptions="Center" />
 
             <Label Text="Version 1.0"
                    FontSize="14"
-                   TextColor="Gray"
+                   TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}"
                    HorizontalOptions="Center" />
 
-            <Label Text="This app helps you organize, view, and edit your favorite recipes with ease. Create, customize, and save delicious dishes anytime, anywhere."
-                   FontSize="16"
-                   TextColor="#444"
-                   HorizontalTextAlignment="Center" />
+            <Frame Padding="15"
+                   CornerRadius="12"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                   BorderColor="{AppThemeBinding Light={StaticResource LightAccentColorLight}, Dark={StaticResource LightAccentColorDark}}"
+                   HasShadow="True">
+                <Label Text="This app helps you organize, view, and edit your favorite recipes with ease. Create, customize, and save delicious dishes anytime, anywhere."
+                       FontSize="16"
+                       TextColor="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}"
+                       HorizontalTextAlignment="Center" />
+            </Frame>
 
-            <Label Text="Created by Ana, Marius and Bogdan"
+            <Label Text="Created by Anamaria, Marius and Bogdan"
                    FontSize="14"
-                   TextColor="#777"
+                   FontAttributes="Bold, Italic"
+                   TextColor="{AppThemeBinding Light={StaticResource SecondaryColorLight}, Dark={StaticResource SecondaryColorDark}}"
                    HorizontalOptions="Center" />
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
